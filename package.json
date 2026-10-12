@@ -2,7 +2,7 @@
   "name": "posit-cheatsheets-browser",
   "displayName": "Posit Cheatsheets Browser",
   "description": "Browse the official Posit cheatsheets from a sidebar and read them in Positron's PDF viewer.",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "publisher": "mburtin",
   "license": "MIT",
   "icon": "media/icon.png",
@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/mburtin/Posit-Cheatsheet.git"
+    "url": "https://github.com/mburtin/Posit-Cheatsheet-Browser.git"
   },
   "engines": {
     "vscode": "^1.90.0"
