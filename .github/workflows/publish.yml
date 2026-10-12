@@ -1,0 +1,39 @@
+# Publishes to Open VSX when a version tag (e.g. v1.0.2) is pushed.
+# No secret needed: Open VSX trusts this workflow through OIDC (Trusted Publishing).
+name: Publish
+
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: read
+  id-token: write # lets ovsx request an OIDC token
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    # Must match the environment set in the Open VSX trusted publisher registration.
+    environment: open-vsx
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Check the tag matches package.json
+        run: |
+          version="$(node -p "require('./package.json').version")"
+          if [ "$GITHUB_REF_NAME" != "v$version" ]; then
+            echo "::error::Tag $GITHUB_REF_NAME does not match package.json version $version."
+            exit 1
+          fi
+
+      - run: npm ci
+      - run: npm test
+      - run: npm run package -- --out extension.vsix
+      - run: npx ovsx publish --packagePath extension.vsix --trusted-publishing

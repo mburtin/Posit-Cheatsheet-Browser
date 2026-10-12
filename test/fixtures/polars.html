@@ -1,0 +1,3187 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+<head>
+  <title>Python Polars: The Definitive Cheatsheet :: Posit Open Source</title>
+  
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta
+  name="description"
+  content="Polars is a library for transforming, analyzing, and visualizing data with a fast and expressive DataFrame API. It was first released by Ritchie Vink in 2020.
+Install Polars with all of its optional dependencies from the terminal:
+uv pip install &#34;polars[all]&#34; Import Polars in Python, and confirm which versions of Polars and its dependencies you have installed:
+import polars as pl pl.show_versions() Polars queries typically read data, transform it, and write the result back out. A complete query is often a single chain of method calls:
+"
+/>
+<meta
+  name="keywords"
+  content=""
+/>
+<meta name="robots" content="noodp" />
+<link rel="canonical" href="https://opensource.posit.co/resources/cheatsheets/polars/" /><meta property="og:url" content="https://opensource.posit.co/resources/cheatsheets/polars/">
+  <meta property="og:site_name" content="Posit Open Source">
+  <meta property="og:title" content="Python Polars: The Definitive Cheatsheet">
+  <meta property="og:description" content="Quick reference guide for transforming, analyzing, and visualizing data with Python Polars.">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="website">
+    <meta property="og:image" content="https://opensource.posit.co/resources/cheatsheets/polars/pp-cover.jpg">
+
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://opensource.posit.co/resources/cheatsheets/polars/pp-cover.jpg">
+  <meta name="twitter:title" content="Python Polars: The Definitive Cheatsheet">
+  <meta name="twitter:description" content="Quick reference guide for transforming, analyzing, and visualizing data with Python Polars.">
+
+
+
+<script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"LearningResource","about":[{"@type":"SoftwareApplication","name":"great-tables"},{"@type":"SoftwareApplication","name":"plotnine"}],"author":[{"@type":"Person","name":"Jeroen Janssens"},{"@type":"Person","name":"Thijs Nieuwdorp"}],"datePublished":"2026-08-10T00:00:00+00:00","description":"Quick reference guide for transforming, analyzing, and visualizing data with Python Polars.","encoding":{"@type":"MediaObject","contentUrl":"https://opensource.posit.co/resources/cheatsheets/polars/polars-cheatsheet.pdf","encodingFormat":"application/pdf"},"image":"https://opensource.posit.co/resources/cheatsheets/polars/hex-polars.svg","learningResourceType":"Cheat sheet","name":"Python Polars: The Definitive Cheatsheet","publisher":{"@type":"Organization","logo":"https://opensource.posit.co/logo.svg","name":"Posit Software, PBC","url":"https://posit.co/"},"url":"https://opensource.posit.co/resources/cheatsheets/polars/"}
+</script>
+
+<link rel="shortcut icon" href="/favicon.ico" />
+
+
+<link rel="preload" href="/fonts/open-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/source-code-pro-latin.woff2" as="font" type="font/woff2" crossorigin>
+
+<link rel="stylesheet" href="/css/index.min.6107b5ebab3693833af7e354209b16adbd720740c802aa64f36cc2fffc1a2fee.css">
+
+
+
+
+<script async src="https://plausible.io/js/pa-ihqNTHznxB62qQp1hgnrh.js"></script>
+<script>
+  window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
+  plausible.init()
+</script>
+
+
+
+
+  
+</head>
+<body class="flex flex-col min-h-screen w-full bg-white overflow-x-clip">
+  <header id="site-header" class="flex flex-none justify-centerbg-white z-50" data-is-home="false">
+    <div class="flex flex-row gap justify-between w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-12 my-4 relative z-50">
+  <div class="flex-none content-center relative z-50">
+    <a href="/" class="block">
+      
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+    
+    
+    
+    
+    
+    
+    
+      
+      
+      
+      
+      
+      
+    
+    
+    
+    
+    <picture class="block w-full h-full">
+      <source
+        type="image/webp"
+        srcset="/posit-open-source-logo-light_hu_50cec5c5bc71f0ad.webp 1x,
+                /posit-open-source-logo-light_hu_c6c053415d8b5b4b.webp 2x,
+                /posit-open-source-logo-light_hu_6597dc75bc6328b2.webp 3x" />
+      <img
+        src="/posit-open-source-logo-light_hu_cb6da56f7d1f6b50.png"
+        srcset="/posit-open-source-logo-light_hu_cb6da56f7d1f6b50.png 1x,
+                /posit-open-source-logo-light_hu_e9f8e583a969442b.png 2x,
+                /posit-open-source-logo-light_hu_eb9904f999055821.png 3x"
+        alt="Posit Open Source"
+        class="h-6.5"
+        loading="lazy" />
+    </picture>
+  
+
+
+    </a>
+    <a href="/" class="hidden">
+      
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+    
+    
+    
+    
+    
+    
+    
+      
+      
+      
+      
+      
+      
+    
+    
+    
+    
+    <picture class="block w-full h-full">
+      <source
+        type="image/webp"
+        srcset="/posit-open-source-logo-dark_hu_95874f04353d47d0.webp 1x,
+                /posit-open-source-logo-dark_hu_c8593b8200d28c97.webp 2x,
+                /posit-open-source-logo-dark_hu_4cde321145fb9db1.webp 3x" />
+      <img
+        src="/posit-open-source-logo-dark_hu_921746bdc15456d9.png"
+        srcset="/posit-open-source-logo-dark_hu_921746bdc15456d9.png 1x,
+                /posit-open-source-logo-dark_hu_11400af34c931d87.png 2x,
+                /posit-open-source-logo-dark_hu_27bc459f2da0f22.png 3x"
+        alt="Posit Open Source"
+        class="h-6.5"
+        loading="lazy" />
+    </picture>
+  
+
+
+    </a>
+  </div>
+  
+  <div class="flex-1"></div>
+  <div class="flex-none flex items-center md:hidden relative z-50">
+    <a href="https://github.com/posit-dev/open-source-website" target="_blank" rel="noopener"
+      class="inline-flex items-center p-2 text-sm text-gray-800 rounded-lg"
+      aria-label="GitHub repository">
+      <i class="w-6 h-6">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+   <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5"></path>
+</svg>
+
+      </i>
+    </a>
+    <button id="search-toggle-mobile" type="button"
+      class="inline-flex items-center p-2 text-sm text-gray-800 rounded-lg cursor-pointer"
+      aria-label="Search">
+      <span class="sr-only"></span>
+      <i class="w-6 h-6">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+    <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
+    <path d="M21 21l-6 -6" />
+</svg>
+
+      </i>
+    </button>
+  </div>
+  <div class="flex-none relative z-50">
+    
+
+
+
+
+<nav class="h-full static flex items-center">
+  <button id="navbar-menu-toggle" type="button"
+    class="inline-flex items-center p-2 text-sm text-gray-800 rounded-lg md:hidden z-[60] relative"
+    aria-controls="navbar-menu" aria-expanded="false">
+    <span class="sr-only"></span>
+    <i class="w-6 h-6" id="menu-icon-hamburger">
+      <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-menu-2" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 6l16 0" />
+  <path d="M4 12l16 0" />
+  <path d="M4 18l16 0" />
+</svg>
+
+    </i>
+    <i class="w-6 h-6 hidden" id="menu-icon-close">
+      <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-x" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M18 6l-12 12" />
+  <path d="M6 6l12 12" />
+</svg>
+
+    </i>
+  </button>
+  <div class="fixed md:static top-20 md:top-auto left-0 right-0 bottom-0 md:bottom-auto z-[90] w-full h-0 md:h-auto md:w-auto md:opacity-100 md:visible transition-all duration-300 ease-in-out overflow-hidden md:overflow-visible" id="navbar-menu" style="transition-property: height, opacity;" data-is-home="false">
+    <div class="absolute inset-0 bg-white md:bg-transparent transition-colors duration-300" id="navbar-menu-bg"></div>
+    <ul
+      class="absolute top-4/9 -translate-y-1/2 left-0 right-0 flex flex-col mx-2 md:static md:top-auto md:translate-y-0 md:mx-0 md:flex-row md:items-center md:gap-x-0 md:border-0 text-base font-regular opacity-0 md:opacity-100 transition-opacity duration-300 md:bg-transparent md:shadow-none md:rounded-none md:border-0" id="navbar-menu-content">
+      
+      <li id="" class="">
+        <a class="block text-center md:text-left text-2xl md:text-[0.9125rem] px-2 lg:px-3 py-5 md:py-3 font-mono font-medium uppercase hover:text-blue-500"
+          href="/software/">Software</a>
+      </li>
+      
+      
+      <li id="" class="">
+        <a class="block text-center md:text-left text-2xl md:text-[0.9125rem] px-2 lg:px-3 py-5 md:py-3 font-mono font-medium uppercase hover:text-blue-500"
+          href="/people/">People</a>
+      </li>
+      
+      
+      <li id="" class="">
+        <a class="block text-center md:text-left text-2xl md:text-[0.9125rem] px-2 lg:px-3 py-5 md:py-3 font-mono font-medium uppercase hover:text-blue-500"
+          href="/events/">Events</a>
+      </li>
+      
+      
+      <li id="resources" class="relative group w-full md:w-auto">
+        <button class="dropdown-toggle block w-full text-center md:text-left text-2xl md:text-[0.9125rem] px-2 lg:px-3 py-5 md:py-3 font-mono font-medium uppercase hover:text-blue-500"
+          aria-expanded="false" aria-haspopup="true">
+          Resources<svg class="dropdown-chevron inline-block w-3 h-3 ml-1 align-middle -translate-y-0.25 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+        </button>
+        <ul class="dropdown-menu hidden md:absolute md:left-0 md:mt-0 md:w-44 md:bg-white md:shadow md:rounded-xl md:py-2 md:z-[60] overflow-hidden transition-[max-height] duration-300 ease-in-out max-h-0 md:max-h-none md:bottom-auto bottom-0">
+          
+          <li>
+            <a class="block px-4 py-2 text-xl md:text-[0.825rem] font-medium uppercase font-mono text-center md:text-left hover:bg-blue-100 hover:text-gray-700"
+              href="/resources/cheatsheets/">Cheatsheets</a>
+          </li>
+          
+          <li>
+            <a class="block px-4 py-2 text-xl md:text-[0.825rem] font-medium uppercase font-mono text-center md:text-left hover:bg-blue-100 hover:text-gray-700"
+              href="/resources/videos/">Videos</a>
+          </li>
+          
+        </ul>
+      </li>
+      
+      
+      <li id="" class="">
+        <a class="block text-center md:text-left text-2xl md:text-[0.9125rem] px-2 lg:px-3 py-5 md:py-3 font-mono font-medium uppercase hover:text-blue-500"
+          href="/blog/">Blog</a>
+      </li>
+      
+      
+      <li id="about" class="relative group w-full md:w-auto">
+        <button class="dropdown-toggle block w-full text-center md:text-left text-2xl md:text-[0.9125rem] px-2 lg:px-3 py-5 md:py-3 font-mono font-medium uppercase hover:text-blue-500"
+          aria-expanded="false" aria-haspopup="true">
+          About<svg class="dropdown-chevron inline-block w-3 h-3 ml-1 align-middle -translate-y-0.25 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+        </button>
+        <ul class="dropdown-menu hidden md:absolute md:left-0 md:mt-0 md:w-44 md:bg-white md:shadow md:rounded-xl md:py-2 md:z-[60] overflow-hidden transition-[max-height] duration-300 ease-in-out max-h-0 md:max-h-none md:bottom-auto bottom-0">
+          
+          <li>
+            <a class="block px-4 py-2 text-xl md:text-[0.825rem] font-medium uppercase font-mono text-center md:text-left hover:bg-blue-100 hover:text-gray-700"
+              href="/about/posit/">About Posit</a>
+          </li>
+          
+          <li>
+            <a class="block px-4 py-2 text-xl md:text-[0.825rem] font-medium uppercase font-mono text-center md:text-left hover:bg-blue-100 hover:text-gray-700"
+              href="/about/ai/">Our AI Work</a>
+          </li>
+          
+          <li>
+            <a class="block px-4 py-2 text-xl md:text-[0.825rem] font-medium uppercase font-mono text-center md:text-left hover:bg-blue-100 hover:text-gray-700"
+              href="/about/python/">Our Python Work</a>
+          </li>
+          
+          <li>
+            <a class="block px-4 py-2 text-xl md:text-[0.825rem] font-medium uppercase font-mono text-center md:text-left hover:bg-blue-100 hover:text-gray-700"
+              href="/about/r/">Our R Work</a>
+          </li>
+          
+          <li>
+            <a class="block px-4 py-2 text-xl md:text-[0.825rem] font-medium uppercase font-mono text-center md:text-left hover:bg-blue-100 hover:text-gray-700"
+              href="/about/community-support/">Community Support</a>
+          </li>
+          
+        </ul>
+      </li>
+      
+      
+      <li class="hidden md:block">
+        <a href="https://github.com/posit-dev/open-source-website" target="_blank" rel="noopener"
+          class="block text-center md:text-left text-2xl md:text-[0.9125rem] px-2 lg:px-3 py-5 md:py-3 font-medium hover:text-blue-500"
+          aria-label="GitHub repository">
+          <i class="w-6 h-6 inline-block align-text-bottom">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+   <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5"></path>
+</svg>
+
+          </i>
+        </a>
+      </li>
+      <li class="hidden md:block">
+        <button id="search-toggle" type="button"
+          class="block text-center md:text-left text-2xl md:text-[0.9125rem] px-2 md:pl-3 md:pr-0 py-5 md:py-3 font-medium hover:text-blue-500 cursor-pointer"
+          aria-label="Search">
+          <i class="w-6 h-6 inline-block align-text-bottom">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+    <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
+    <path d="M21 21l-6 -6" />
+</svg>
+
+          </i>
+        </button>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+
+  </div>
+  
+  <div class="flex-none mx-1"></div>
+  
+</div>
+
+  </header>
+  <main class="flex flex-auto justify-center">
+    <div class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+        <span class="sr-only" data-pagefind-filter="type">Resources</span>
+      
+      
+<article class="flex flex-col w-full relative">
+  
+  
+  
+  
+  
+  <img src="/resources/cheatsheets/polars/hex-polars.svg" alt="Python Polars: The Definitive Cheatsheet" class="hidden" data-pagefind-meta="image[src]">
+  
+  
+  <div class="w-full lg:max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+    
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+
+
+
+
+
+
+  
+    
+      
+    
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+    
+  
+    
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+    
+  
+    
+  
+  
+    
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="item-2908cd68b8ba4555ebed001a8fc489bd" class="@container flex flex-col relative rounded-xl overflow-hidden  ">
+
+      
+
+
+
+  
+  
+  
+  
+
+  <div class="flex flex-col gap-y-4 py-6">
+    
+    
+    
+    <div class="flex flex-row flex-wrap gap-x-4 gap-y-2 items-center">
+      
+      <div class="flex flex-wrap gap-1">
+        
+        <a href="/software/great-tables/" class="px-2 py-0.5 rounded-md bg-blue-100 text-blue-700 text-xs font-semibold uppercase tracking-wide hover:bg-blue-200">Great Tables</a>
+        
+        <a href="/software/plotnine/" class="px-2 py-0.5 rounded-md bg-blue-100 text-blue-700 text-xs font-semibold uppercase tracking-wide hover:bg-blue-200">plotnine</a>
+        
+      </div>
+      
+      
+      <span class="text-sm font-mono font-medium text-gray-600">|</span>
+      <div class="flex flex-wrap gap-1">
+        
+        <a href="/languages/python/" class="px-2 py-0.5 rounded-md bg-blue-100 text-blue-700 text-xs font-semibold uppercase tracking-wide hover:bg-blue-200">Python</a>
+        
+      </div>
+      
+    </div>
+    
+
+    <h1 class="text-2xl @grande:text-3xl @venti:text-4xl font-medium text-gray-500">
+      Python Polars: The Definitive Cheatsheet
+    </h1>
+
+    
+      <div class="text-sm @grande:text-base @venti:text-lg text-gray-600">
+        <p class="line-clamp-3 [&_a]:underline" id="video-description" data-hero-desc>Quick reference guide for transforming, analyzing, and visualizing data with Python Polars</p>
+        <button class="text-blue-600 hover:underline mt-1 hidden" data-hero-toggle>Read more...</button>
+      </div>
+    
+
+    
+    
+
+    
+    
+    <div class="flex items-center text-xs @grande:text-sm @venti:text-base mt-2">
+      <div class="mt-2 flex flex-row gap-x-4 items-center"><div class="flex flex-row flex-shrink-0"><img 
+          src="/people/jeroen-janssens/jeroenjanssens-headshot-2021.png" 
+          alt="Jeroen Janssens" 
+          class="my-0! w-6 h-6 rounded-full object-cover ring-2 ring-white "
+          style="z-index: 10;"
+        ><img 
+          src="/people/thijs-nieuwdorp/thijs-nieuwdorp.png" 
+          alt="Thijs Nieuwdorp" 
+          class="my-0! w-6 h-6 rounded-full object-cover ring-2 ring-white -ml-2"
+          style="z-index: 9;"
+        ></div><div class="flex flex-wrap gap-x-1 items-center font-medium text-gray-600"><a href="/people/jeroen-janssens/" class="hover:underline">Jeroen Janssens</a><span class="text-gray-400 -ml-1">,</span><a href="/people/thijs-nieuwdorp/" class="hover:underline">Thijs Nieuwdorp</a></div></div>
+    </div>
+    
+
+    
+    
+    
+    
+
+    
+    
+
+  </div>
+  <script>
+  (function() {
+    var container = document.getElementById('item-2908cd68b8ba4555ebed001a8fc489bd');
+    if (!container) return;
+    var desc = container.querySelector('[data-hero-desc]');
+    var btn = container.querySelector('[data-hero-toggle]');
+    if (!desc || !btn) return;
+    document.addEventListener('DOMContentLoaded', function() {
+      if (desc.scrollHeight > desc.clientHeight) btn.classList.remove('hidden');
+    });
+    btn.addEventListener('click', function() {
+      if (desc.classList.contains('line-clamp-3')) {
+        desc.classList.remove('line-clamp-3');
+        btn.textContent = 'Read less.';
+      } else {
+        desc.classList.add('line-clamp-3');
+        btn.textContent = 'Read more...';
+      }
+    });
+  })();
+  </script>
+
+  
+
+</div>
+
+
+
+      <div class="mt-6">
+        <div class="flex gap-4 overflow-x-auto pb-2">
+          
+          
+          
+          
+          <div class="shrink-0">
+            <img src="/resources/cheatsheets/polars/page-1.png" alt="Page 1 preview"
+              width="600" height="463"
+              class="h-48 w-auto rounded-lg border border-gray-100 bg-gray-50 cursor-pointer"
+              loading="lazy"
+              data-gallery-group="cheatsheet-preview"
+              data-gallery-src="/resources/cheatsheets/polars/page-1.png"
+              data-gallery-pdf="polars-cheatsheet.pdf"
+              data-gallery-pdf-page="1"
+              data-gallery-caption="Page 1"
+              role="button"
+              tabindex="0" />
+          </div>
+          
+          
+          
+          
+          
+          <div class="shrink-0">
+            <img src="/resources/cheatsheets/polars/page-2.png" alt="Page 2 preview"
+              width="600" height="463"
+              class="h-48 w-auto rounded-lg border border-gray-100 bg-gray-50 cursor-pointer"
+              loading="lazy"
+              data-gallery-group="cheatsheet-preview"
+              data-gallery-src="/resources/cheatsheets/polars/page-2.png"
+              data-gallery-pdf="polars-cheatsheet.pdf"
+              data-gallery-pdf-page="2"
+              data-gallery-caption="Page 2"
+              role="button"
+              tabindex="0" />
+          </div>
+          
+          
+        </div>
+      </div>
+      <div class="flex flex-wrap gap-2 mt-6">
+        
+        
+        <a href="polars-cheatsheet.pdf" target="_blank"
+          class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-green-600 hover:bg-green-700 text-white font-medium transition-colors">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+          </svg>
+          Download PDF
+        </a>
+        
+
+        
+      </div>
+    
+  </div>
+  
+
+  <div class="w-full lg:max-w-5xl mx-auto px-4 sm:px-6 lg:px-8"><div class="flex flex-col md:flex-row gap-8 lg:gap-16 mt-8"><div class="flex-1">
+        <div data-pagefind-body class="w-full prose text-[1.075rem] prose-quoteless post-content max-w-none lg:max-w-[65ch]">
+          <p><a href="https://pola.rs" target="_blank" rel="noopener">Polars</a> is a library for transforming, analyzing, and visualizing data with a fast
+and expressive DataFrame API.
+It was first released by Ritchie Vink in 2020.</p>
+<p>Install Polars with all of its optional dependencies from the terminal:</p>
+<div class="code-block"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">uv pip install <span class="s2">&#34;polars[all]&#34;</span></span></span></code></pre></div></div>
+<p>Import Polars in Python, and confirm which versions of Polars and its
+dependencies you have installed:</p>
+<div class="code-block"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">polars</span> <span class="k">as</span> <span class="nn">pl</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">pl</span><span class="o">.</span><span class="n">show_versions</span><span class="p">()</span></span></span></code></pre></div></div>
+<p>Polars queries typically read data, transform it, and write the result back out.
+A complete query is often a single chain of method calls:</p>
+<div class="code-block"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">fruit</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&#34;fruit.csv&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">fruit</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">&#34;weight&#34;</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1000</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">&#34;is_round&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span><span class="o">.</span><span class="n">write_parquet</span><span class="p">(</span><span class="s2">&#34;fruit.parquet&#34;</span><span class="p">)</span></span></span></code></pre></div></div>
+<p>Throughout this cheatsheet, <code>df</code> is a <code>DataFrame</code>, <code>lf</code> is a <code>LazyFrame</code>, <code>o</code> is a
+second DataFrame to combine with <code>df</code>, and <code>e</code> stands for any expression.
+So <code>e.abs()</code> means &ldquo;call <code>.abs()</code> on an expression&rdquo;, as in <code>pl.col(&quot;x&quot;).abs()</code>.</p>
+<h2 id="data-structures">Data Structures<a class="heading-anchor" href="#data-structures" aria-label="Link to this section: Data Structures">#</a>
+</h2>
+<p>Polars stores all of its data in either a Series or a DataFrame.</p>
+<table>
+  <thead>
+      <tr>
+          <th>Structure</th>
+          <th>Description</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>Series</code></td>
+          <td>One-dimensional. Holds a sequence of values of the same data type.</td>
+      </tr>
+      <tr>
+          <td><code>DataFrame</code></td>
+          <td>Two-dimensional. Has rows and columns. One or more Series, all of the same length.</td>
+      </tr>
+      <tr>
+          <td><code>LazyFrame</code></td>
+          <td>Resembles a DataFrame but holds no data. A blueprint for generating a DataFrame.</td>
+      </tr>
+  </tbody>
+</table>
+<p>Unlike pandas, Polars DataFrames do not have a row index, and the API favors
+immutability and method chaining over in-place modifications.</p>
+<ul>
+<li>
+<p>Create a Series by passing a name and a sequence of values:</p>
+<div class="code-block"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">series</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="s2">&#34;sales&#34;</span><span class="p">,</span> <span class="p">[</span><span class="mf">150.00</span><span class="p">,</span> <span class="mf">300.00</span><span class="p">,</span> <span class="mf">250.00</span><span class="p">])</span></span></span></code></pre></div></div>
+</li>
+<li>
+<p>Create a DataFrame from a dictionary of columns, where each value is a Series
+or a plain Python sequence.
+You can also use any of the <code>pl.read_*()</code> functions to create one from a file:</p>
+<div class="code-block"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">df</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;sales&#34;</span><span class="p">:</span> <span class="n">series</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;id&#34;</span><span class="p">:</span> <span class="p">[</span><span class="mi">41</span><span class="p">,</span> <span class="mi">42</span><span class="p">,</span> <span class="mi">43</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="p">})</span></span></span></code></pre></div></div>
+</li>
+<li>
+<p>Because there is no row index, add one explicitly as a column when you need it:</p>
+<div class="code-block"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">df</span><span class="o">.</span><span class="n">with_row_index</span><span class="p">(</span><span class="s2">&#34;id&#34;</span><span class="p">)</span></span></span></code></pre></div></div>
+</li>
+<li>
+<p>Turn a DataFrame into a LazyFrame.
+Alternatively, start from a LazyFrame directly with any of the <code>pl.scan_*()</code>
+functions:</p>
+<div class="code-block"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">lf</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">lazy</span><span class="p">()</span></span></span></code></pre></div></div>
+</li>
+</ul>
+<h2 id="eager-and-lazy-apis">Eager and Lazy APIs<a class="heading-anchor" href="#eager-and-lazy-apis" aria-label="Link to this section: Eager and Lazy APIs">#</a>
+</h2>
+<p>The eager API executes immediately, whereas the lazy API builds an optimized query
+plan first.
+The optimizer automatically applies predicate pushdown (filtering as early as
+possible) and projection pushdown (dropping columns that are never used).</p>
+<p>You move between the two representations with <code>.lazy()</code> and <code>.collect()</code>: <code>.lazy()</code>
+turns a DataFrame into a LazyFrame, and <code>.collect()</code> executes a LazyFrame and gives
+you a DataFrame back.</p>
+<ul>
+<li>
+<p>Turn a DataFrame into a LazyFrame, and execute a LazyFrame to get a DataFrame:</p>
+<div class="code-block"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">lf</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">lazy</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">df</span> <span class="o">=</span> <span class="n">lf</span><span class="o">.</span><span class="n">collect</span><span class="p">()</span></span></span></code></pre></div></div>
+</li>
+<li>
+<p>Use the streaming engine to process data out-of-core, so that datasets larger
+than memory can still be handled:</p>
+<div class="code-block"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">lf</span><span class="o">.</span><span class="n">collect</span><span class="p">(</span><span class="n">engine</span><span class="o">=</span><span class="s2">&#34;streaming&#34;</span><span class="p">)</span></span></span></code></pre></div></div>
+</li>
+<li>
+<p>Print the optimized query plan as text, or visualize it as a graph, to see what
+the optimizer decided to do:</p>
+<div class="code-block"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">lf</span><span class="o">.</span><span class="n">explain</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">lf</span><span class="o">.</span><span class="n">show_graph</span><span class="p">()</span></span></span></code></pre></div></div>
+</li>
+<li>
+<p>Execute the query and return per-node timings, which tells you where the time
+actually goes:</p>
+<div class="code-block"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">lf</span><span class="o">.</span><span class="n">profile</span><span class="p">()</span></span></span></code></pre></div></div>
+</li>
+</ul>
+<h2 id="data-types">Data Types<a class="heading-anchor" href="#data-types" aria-label="Link to this section: Data Types">#</a>
+</h2>
+<p>Polars implements most of the Apache Arrow memory specification, which is an
+efficient columnar format for flat and hierarchical data.</p>
+<table>
+  <thead>
+      <tr>
+          <th>Group</th>
+          <th>Type</th>
+          <th>Notes</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Numeric</td>
+          <td><code>Decimal</code></td>
+          <td>128 bits, precision, scale</td>
+      </tr>
+      <tr>
+          <td></td>
+          <td><code>Float32</code></td>
+          <td>Ranges ±3.4×10³⁸</td>
+      </tr>
+      <tr>
+          <td></td>
+          <td><code>Float64</code></td>
+          <td>Ranges ±1.8×10³⁰⁸</td>
+      </tr>
+      <tr>
+          <td></td>
+          <td><code>Int8</code></td>
+          <td>Ranges ±128</td>
+      </tr>
+      <tr>
+          <td></td>
+          <td><code>Int16</code></td>
+          <td>Ranges ±32,768</td>
+      </tr>
+      <tr>
+          <td></td>
+          <td><code>Int32</code></td>
+          <td>Ranges ±2.1×10⁹</td>
+      </tr>
+      <tr>
+          <td></td>
+          <td><code>Int64</code></td>
+          <td>Ranges ±9.2×10¹⁸</td>
+      </tr>
+      <tr>
+          <td></td>
+          <td><code>Int128</code></td>
+          <td>Ranges ±3.4×10³⁸</td>
+      </tr>
+      <tr>
+          <td></td>
+          <td><code>UInt8</code></td>
+          <td>Ranges 0–255</td>
+      </tr>
+      <tr>
+          <td></td>
+          <td><code>UInt16</code></td>
+          <td>Ranges 0–65,535</td>
+      </tr>
+      <tr>
+          <td></td>
+          <td><code>UInt32</code></td>
+          <td>Ranges 0–4.3×10⁹</td>
+      </tr>
+      <tr>
+          <td></td>
+          <td><code>UInt64</code></td>
+          <td>Ranges 0–1.8×10¹⁹</td>
+      </tr>
+      <tr>
+          <td>Temporal</td>
+          <td><code>Date</code></td>
+          <td>Days since Unix epoch</td>
+      </tr>
+      <tr>
+          <td></td>
+          <td><code>Datetime</code></td>
+          <td>Microseconds since epoch</td>
+      </tr>
+      <tr>
+          <td></td>
+          <td><code>Duration</code></td>
+          <td>Time duration / delta</td>
+      </tr>
+      <tr>
+          <td></td>
+          <td><code>Time</code></td>
+          <td>Time of day</td>
+      </tr>
+      <tr>
+          <td>Nested</td>
+          <td><code>Array</code></td>
+          <td>Fixed-length sequence</td>
+      </tr>
+      <tr>
+          <td></td>
+          <td><code>List</code></td>
+          <td>Variable-length sequence</td>
+      </tr>
+      <tr>
+          <td></td>
+          <td><code>Struct</code></td>
+          <td>Multiple fields with names</td>
+      </tr>
+      <tr>
+          <td>String</td>
+          <td><code>String</code></td>
+          <td>UTF-8 text, variable length</td>
+      </tr>
+      <tr>
+          <td></td>
+          <td><code>Categorical</code></td>
+          <td>Dict of Strings</td>
+      </tr>
+      <tr>
+          <td></td>
+          <td><code>Enum</code></td>
+          <td>Fixed dict of Strings</td>
+      </tr>
+      <tr>
+          <td>Other</td>
+          <td><code>Boolean</code></td>
+          <td>True / False</td>
+      </tr>
+      <tr>
+          <td></td>
+          <td><code>Binary</code></td>
+          <td>Raw bytes</td>
+      </tr>
+      <tr>
+          <td></td>
+          <td><code>Null</code></td>
+          <td>Represents Null / None</td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="inspecting-types">Inspecting Types<a class="heading-anchor" href="#inspecting-types" aria-label="Link to this section: Inspecting Types">#</a>
+</h3>
+<ul>
+<li>
+<p>Get a dictionary of column names and data types, or just the list of data types:</p>
+<div class="code-block"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">df</span><span class="o">.</span><span class="n">schema</span>
+</span></span><span class="line"><span class="cl"><span class="n">df</span><span class="o">.</span><span class="n">dtypes</span></span></span></code></pre></div></div>
+</li>
+<li>
+<p>Print one row per column, including data types, which is useful for wide
+DataFrames where printing the DataFrame itself is unreadable:</p>
+<div class="code-block"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">df</span><span class="o">.</span><span class="n">glimpse</span><span class="p">()</span></span></span></code></pre></div></div>
+</li>
+<li>
+<p>Compute per-column summary statistics, including the number of nulls:</p>
+<div class="code-block"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">df</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span></span></span></code></pre></div></div>
+</li>
+<li>
+<p>Report the in-memory size of the DataFrame in the unit you ask for:</p>
+<div class="code-block"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">df</span><span class="o">.</span><span class="n">estimated_size</span><span class="p">(</span><span class="s2">&#34;mb&#34;</span><span class="p">)</span></span></span></code></pre></div></div>
+</li>
+</ul>
+<h3 id="casting">Casting<a class="heading-anchor" href="#casting" aria-label="Link to this section: Casting">#</a>
+</h3>
+<ul>
+<li>
+<p>Cast a column to another data type.
+By default the cast is strict, so a value that does not fit raises an error:</p>
+<div class="code-block"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">df</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">&#34;id&#34;</span><span class="p">)</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">UInt64</span><span class="p">))</span></span></span></code></pre></div></div>
+</li>
+<li>
+<p>Pass <code>strict=False</code> to cast without raising.
+Values that overflow the target type become nulls instead:</p>
+<div class="code-block"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">df</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">&#34;id&#34;</span><span class="p">)</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">Int8</span><span class="p">,</span> <span class="n">strict</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span></span></span></code></pre></div></div>
+</li>
+</ul>
+<h2 id="reading-and-writing-data">Reading and Writing Data<a class="heading-anchor" href="#reading-and-writing-data" aria-label="Link to this section: Reading and Writing Data">#</a>
+</h2>
+<p>Polars has four families of input and output functions, and which one you want
+depends on whether you are working eagerly or lazily:</p>
+<ul>
+<li><code>read_*()</code> reads data into a DataFrame.</li>
+<li><code>scan_*()</code> creates a LazyFrame, deferring the actual reading until you collect.</li>
+<li><code>write_*()</code> writes a DataFrame to disk or to cloud storage.</li>
+<li><code>sink_*()</code> streams data to disk or to cloud storage without holding it all in
+memory.</li>
+</ul>
+<p>Not every format supports all four operations:</p>
+<table>
+  <thead>
+      <tr>
+          <th>Format</th>
+          <th style="text-align: center"><code>read</code></th>
+          <th style="text-align: center"><code>scan</code></th>
+          <th style="text-align: center"><code>write</code></th>
+          <th style="text-align: center"><code>sink</code></th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Avro</td>
+          <td style="text-align: center">✓</td>
+          <td style="text-align: center"></td>
+          <td style="text-align: center">✓</td>
+          <td style="text-align: center"></td>
+      </tr>
+      <tr>
+          <td>Clipboard</td>
+          <td style="text-align: center">✓</td>
+          <td style="text-align: center"></td>
+          <td style="text-align: center">✓</td>
+          <td style="text-align: center"></td>
+      </tr>
+      <tr>
+          <td>CSV</td>
+          <td style="text-align: center">✓</td>
+          <td style="text-align: center">✓</td>
+          <td style="text-align: center">✓</td>
+          <td style="text-align: center">✓</td>
+      </tr>
+      <tr>
+          <td>Database</td>
+          <td style="text-align: center">✓</td>
+          <td style="text-align: center"></td>
+          <td style="text-align: center">✓</td>
+          <td style="text-align: center"></td>
+      </tr>
+      <tr>
+          <td>Delta Lake</td>
+          <td style="text-align: center">✓</td>
+          <td style="text-align: center">✓</td>
+          <td style="text-align: center">✓</td>
+          <td style="text-align: center">✓</td>
+      </tr>
+      <tr>
+          <td>Excel / ODS</td>
+          <td style="text-align: center">✓</td>
+          <td style="text-align: center"></td>
+          <td style="text-align: center">✓</td>
+          <td style="text-align: center"></td>
+      </tr>
+      <tr>
+          <td>Iceberg</td>
+          <td style="text-align: center"></td>
+          <td style="text-align: center">✓</td>
+          <td style="text-align: center">✓</td>
+          <td style="text-align: center">✓</td>
+      </tr>
+      <tr>
+          <td>IPC / Feather</td>
+          <td style="text-align: center">✓</td>
+          <td style="text-align: center">✓</td>
+          <td style="text-align: center">✓</td>
+          <td style="text-align: center">✓</td>
+      </tr>
+      <tr>
+          <td>JSON</td>
+          <td style="text-align: center">✓</td>
+          <td style="text-align: center"></td>
+          <td style="text-align: center">✓</td>
+          <td style="text-align: center"></td>
+      </tr>
+      <tr>
+          <td>NDJSON</td>
+          <td style="text-align: center">✓</td>
+          <td style="text-align: center">✓</td>
+          <td style="text-align: center">✓</td>
+          <td style="text-align: center">✓</td>
+      </tr>
+      <tr>
+          <td>Parquet</td>
+          <td style="text-align: center">✓</td>
+          <td style="text-align: center">✓</td>
+          <td style="text-align: center">✓</td>
+          <td style="text-align: center">✓</td>
+      </tr>
+      <tr>
+          <td>PyArrow Dataset</td>
+          <td style="text-align: center"></td>
+          <td style="text-align: center">✓</td>
+          <td style="text-align: center"></td>
+          <td style="text-align: center"></td>
+      </tr>
+  </tbody>
+</table>
+<p>Keyword arguments that many of these functions accept include
+<code>schema_overrides</code>, <code>n_rows</code>, <code>row_index_name</code>, <code>storage_options</code>, and
+<code>compression</code>.</p>
+<ul>
+<li>
+<p>Scan files in cloud storage by passing a URI with a glob pattern, and use
+<code>storage_options</code> to supply credentials and region settings:</p>
+<div class="code-block"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">pl</span><span class="o">.</span><span class="n">scan_parquet</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;s3://bucket/*.parquet&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">storage_options</span><span class="o">=</span><span class="p">{</span><span class="s2">&#34;aws_region&#34;</span><span class="p">:</span> <span class="s2">&#34;us-east-2&#34;</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span></span></span></code></pre></div></div>
+</li>
+<li>
+<p>Stream a query straight to a partitioned Parquet dataset, writing one directory
+per distinct value of the key column:</p>
+<div class="code-block"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">lf</span><span class="o">.</span><span class="n">sink_parquet</span><span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">PartitionBy</span><span class="p">(</span><span class="s2">&#34;out/&#34;</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="s2">&#34;x&#34;</span><span class="p">))</span></span></span></code></pre></div></div>
+</li>
+</ul>
+<h2 id="transforming-data">Transforming Data<a class="heading-anchor" href="#transforming-data" aria-label="Link to this section: Transforming Data">#</a>
+</h2>
+<h3 id="selecting-columns">Selecting Columns<a class="heading-anchor" href="#selecting-columns" aria-label="Link to this section: Selecting Columns">#</a>
+</h3>
+<p>Keep columns based on their name, data type, or position.</p>
+<ul>
+<li>
+<p>Select columns by name:</p>
+<div class="code-block"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">df</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&#34;a&#34;</span><span class="p">,</span> <span class="s2">&#34;b&#34;</span><span class="p">)</span></span></span></code></pre></div></div>
+</li>
+<li>
+<p>Select the result of an expression, so that you can transform columns on their
+way out:</p>
+<div class="code-block"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">df</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">&#34;x&#34;</span><span class="p">)</span> <span class="o">*</span> <span class="mi">2</span><span class="p">)</span></span></span></code></pre></div></div>
+</li>
+<li>
+<p>Give the result of an expression a name by using a keyword argument, which
+produces a new column:</p>
+<div class="code-block"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">df</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">doubled</span><span class="o">=</span><span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">&#34;x&#34;</span><span class="p">)</span> <span class="o">*</span> <span class="mi">2</span><span class="p">)</span></span></span></code></pre></div></div>
+</li>
+<li>
+<p>Select columns whose names match a regular expression.
+The pattern must start with <code>^</code> and end with <code>$</code>:</p>
+<div class="code-block"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">df</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">&#34;^.*_color$&#34;</span><span class="p">))</span></span></span></code></pre></div></div>
+</li>
+<li>
+<p>Select every column:</p>
+<div class="code-block"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">df</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">all</span><span class="p">())</span></span></span></code></pre></div></div>
+</li>
+</ul>
+<p>Use column selectors for more flexibility.
+They can be combined using the set operators <code>|</code>, <code>&amp;</code>, <code>-</code>, <code>^</code>, and <code>~</code>.</p>
+<ul>
+<li>
+<p>Import the selectors module, then select columns by data type or by name
+pattern.
+See also <code>cs.string()</code>, <code>cs.contains()</code>, and <code>cs.first()</code>:</p>
+<div class="code-block"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">polars.selectors</span> <span class="k">as</span> <span class="nn">cs</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">df</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">cs</span><span class="o">.</span><span class="n">numeric</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl"><span class="n">df</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">cs</span><span class="o">.</span><span class="n">starts_with</span><span class="p">(</span><span class="s2">&#34;val&#34;</span><span class="p">))</span></span></span></code></pre></div></div>
+</li>
+<li>
+<p>Drop columns instead of keeping them.
+Pass <code>strict=False</code> so that names which do not exist are ignored rather than
+raising an error:</p>
+<div class="code-block"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s2">&#34;a&#34;</span><span class="p">,</span> <span class="s2">&#34;y&#34;</span><span class="p">,</span> <span class="n">strict</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></span></span></code></pre></div></div>
+</li>
+</ul>
+<h3 id="creating-columns">Creating Columns<a class="heading-anchor" href="#creating-columns" aria-label="Link to this section: Creating Columns">#</a>
+</h3>
+<p>New columns are added to the right of the existing ones.</p>
+<ul>
+<li>
+<p>Add a new column computed from an expression, naming it with a keyword
+argument:</p>
+<div class="code-block"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">df</span><span class="o">.</span><span class="n">with_columns</span><span class="p">(</span><span class="n">new</span><span class="o">=</span><span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">&#34;a&#34;</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span></span></span></code></pre></div></div>
+</li>
+<li>
+<p>Replace an existing column by producing an expression with the same name.
+Here, nulls in column <code>a</code> are replaced with zeros:</p>
+<div class="code-block"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">df</span><span class="o">.</span><span class="n">with_columns</span><span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">&#34;a&#34;</span><span class="p">)</span><span class="o">.</span><span class="n">fill_null</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span></span></span></code></pre></div></div>
+</li>
+<li>
+<p>Add a column with the same literal value in every row:</p>
+<div class="code-block"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">df</span><span class="o">.</span><span class="n">with_columns</span><span class="p">(</span><span class="n">ones</span><span class="o">=</span><span class="n">pl</span><span class="o">.</span><span class="n">lit</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span></span></span></code></pre></div></div>
+</li>
+<li>
+<p>Add a column of row indices.
+Use <code>offset</code> to start counting somewhere other than zero:</p>
+<div class="code-block"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">df</span><span class="o">.</span><span class="n">with_row_index</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&#34;id&#34;</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span></span></span></code></pre></div></div>
+</li>
+</ul>
+<h3 id="filtering-rows">Filtering Rows<a class="heading-anchor" href="#filtering-rows" aria-label="Link to this section: Filtering Rows">#</a>
+</h3>
+<p>Keep rows according to the values in one or more columns or expressions.</p>
+<ul>
+<li>
+<p>Filter on an existing boolean column by passing its name:</p>
+<div class="code-block"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">df</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="s2">&#34;valid&#34;</span><span class="p">)</span></span></span></code></pre></div></div>
+</li>
+<li>
+<p>Filter with a single expression:</p>
+<div class="code-block"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">df</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">&#34;x&#34;</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">5</span><span class="p">)</span></span></span></code></pre></div></div>
+</li>
+<li>
+<p>Pass multiple expressions to combine them with a logical AND.
+You can also write the AND explicitly with <code>&amp;</code>, in which case each comparison
+needs its own parentheses:</p>
+<div class="code-block"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">df</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">&#34;valid&#34;</span><span class="p">),</span> <span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">&#34;x&#34;</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">5</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">df</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">&#34;valid&#34;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">&#34;x&#34;</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">5</span><span class="p">))</span></span></span></code></pre></div></div>
+</li>
+<li>
+<p>Use <code>|</code> for a logical OR:</p>
+<div class="code-block"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">df</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">&#34;valid&#34;</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">&#34;x&#34;</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">5</span><span class="p">))</span></span></span></code></pre></div></div>
+</li>
+<li>
+<p>Filter with keyword-argument constraints, which is shorthand for testing
+equality and combining the results with AND:</p>
+<div class="code-block"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">df</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">valid</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span></span></span></code></pre></div></div>
+</li>
+<li>
+<p>Keep only rows without any missing values, or restrict the check to specific
+columns:</p>
+<div class="code-block"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">df</span><span class="o">.</span><span class="n">drop_nulls</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">df</span><span class="o">.</span><span class="n">drop_nulls</span><span class="p">(</span><span class="s2">&#34;x&#34;</span><span class="p">)</span></span></span></code></pre></div></div>
+</li>
+<li>
+<p>Remove duplicate rows.
+Use <code>subset</code> to decide which columns define a duplicate, and <code>keep</code> to choose
+which of the duplicates survives:</p>
+<div class="code-block"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">df</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s2">&#34;x&#34;</span><span class="p">],</span> <span class="n">keep</span><span class="o">=</span><span class="s2">&#34;first&#34;</span><span class="p">)</span></span></span></code></pre></div></div>
+</li>
+</ul>
+<h3 id="slicing-and-sampling-rows">Slicing and Sampling Rows<a class="heading-anchor" href="#slicing-and-sampling-rows" aria-label="Link to this section: Slicing and Sampling Rows">#</a>
+</h3>
+<p>Keep rows based on their position.</p>
+<ul>
+<li>
+<p>Keep the first rows, or the last rows.
+Both default to five:</p>
+<div class="code-block"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">df</span><span class="o">.</span><span class="n">tail</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span></span></span></code></pre></div></div>
+</li>
+<li>
+<p>Keep a contiguous slice by giving an offset and a length.
+This keeps the third row through the seventh:</p>
+<div class="code-block"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">df</span><span class="o">.</span><span class="n">slice</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span></span></span></code></pre></div></div>
+</li>
+<li>
+<p>Keep every <em>n</em>th row:</p>
+<div class="code-block"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">df</span><span class="o">.</span><span class="n">gather_every</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span></span></span></code></pre></div></div>
+</li>
+<li>
+<p>Take a random sample of rows.
+Use <code>with_replacement=True</code> to allow the same row to be drawn more than once,
+or <code>fraction</code> to sample a proportion instead of a fixed number:</p>
+<div class="code-block"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">df</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">df</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">with_replacement</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">df</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">fraction</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span></span></span></code></pre></div></div>
+</li>
+</ul>
+<h3 id="sorting-rows">Sorting Rows<a class="heading-anchor" href="#sorting-rows" aria-label="Link to this section: Sorting Rows">#</a>
+</h3>
+<p>Reorder rows according to the values in one or more columns or expressions.</p>
+<ul>
+<li>
+<p>Sort by a single column, ascending by default, or by multiple columns in
+sequence:</p>
+<div class="code-block"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">df</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="s2">&#34;x&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">df</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="s2">&#34;x&#34;</span><span class="p">,</span> <span class="s2">&#34;y&#34;</span><span class="p">)</span></span></span></code></pre></div></div>
+</li>
+<li>
+<p>Move nulls to the end rather than the beginning:</p>
+<div class="code-block"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">df</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="s2">&#34;x&#34;</span><span class="p">,</span> <span class="n">nulls_last</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></span></span></code></pre></div></div>
+</li>
+<li>
+<p>Reverse the order.
+When sorting by several columns, pass a list of booleans to set the direction
+per column:</p>
+<div class="code-block"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">df</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="s2">&#34;x&#34;</span><span class="p">,</span> <span class="n">descending</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">df</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="s2">&#34;x&#34;</span><span class="p">,</span> <span class="s2">&#34;y&#34;</span><span class="p">,</span> <span class="n">descending</span><span class="o">=</span><span class="p">[</span><span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">])</span></span></span></code></pre></div></div>
+</li>
+<li>
+<p>Sort by the result of an expression rather than by a column, such as a computed
+ratio or the length of a list:</p>
+<div class="code-block"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">df</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">&#34;x&#34;</span><span class="p">)</span> <span class="o">/</span> <span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">&#34;y&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="n">df</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">&#34;l&#34;</span><span class="p">)</span><span class="o">.</span><span class="n">list</span><span class="o">.</span><span class="n">len</span><span class="p">())</span></span></span></code></pre></div></div>
+</li>
+<li>
+<p>Keep only the <em>k</em> largest or smallest rows according to a column, which is
+cheaper than sorting everything and then slicing:</p>
+<div class="code-block"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">df</span><span class="o">.</span><span class="n">top_k</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="n">by</span><span class="o">=</span><span class="s2">&#34;score&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">df</span><span class="o">.</span><span class="n">bottom_k</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="n">by</span><span class="o">=</span><span class="s2">&#34;score&#34;</span><span class="p">)</span></span></span></code></pre></div></div>
+</li>
+</ul>
+<h3 id="reshaping">Reshaping<a class="heading-anchor" href="#reshaping" aria-label="Link to this section: Reshaping">#</a>
+</h3>
+<p>Go from wide to long and back again.</p>
+<ul>
+<li>
+<p>Make a DataFrame longer by turning the values of one or more columns into rows,
+keeping <code>index</code> columns as identifiers:</p>
+<div class="code-block"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">df</span><span class="o">.</span><span class="n">unpivot</span><span class="p">(</span><span class="n">on</span><span class="o">=</span><span class="p">[</span><span class="s2">&#34;c&#34;</span><span class="p">],</span> <span class="n">index</span><span class="o">=</span><span class="s2">&#34;id&#34;</span><span class="p">)</span></span></span></code></pre></div></div>
+</li>
+<li>
+<p>Make a DataFrame wider by turning the values of a column into new columns.
+If the combination of <code>on</code> and <code>index</code> is not unique, supply an
+<code>aggregate_function</code> to decide how to combine the collisions:</p>
+<div class="code-block"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">df</span><span class="o">.</span><span class="n">pivot</span><span class="p">(</span><span class="n">on</span><span class="o">=</span><span class="s2">&#34;c&#34;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="s2">&#34;id&#34;</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="s2">&#34;x&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">df</span><span class="o">.</span><span class="n">pivot</span><span class="p">(</span><span class="n">on</span><span class="o">=</span><span class="s2">&#34;c&#34;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="s2">&#34;id&#34;</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="s2">&#34;x&#34;</span><span class="p">,</span> <span class="n">aggregate_function</span><span class="o">=</span><span class="s2">&#34;sum&#34;</span><span class="p">)</span></span></span></code></pre></div></div>
+</li>
+<li>
+<p>Expand a list column so that each element gets its own row, repeating the other
+columns:</p>
+<div class="code-block"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">df</span><span class="o">.</span><span class="n">explode</span><span class="p">(</span><span class="s2">&#34;l&#34;</span><span class="p">)</span></span></span></code></pre></div></div>
+</li>
+<li>
+<p>Expand a struct column so that each field becomes its own column:</p>
+<div class="code-block"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">df</span><span class="o">.</span><span class="n">unnest</span><span class="p">(</span><span class="s2">&#34;s&#34;</span><span class="p">)</span></span></span></code></pre></div></div>
+</li>
+<li>
+<p>Swap rows and columns.
+Use <code>include_header=True</code> to keep the original column names as a column:</p>
+<div class="code-block"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">df</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">include_header</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></span></span></code></pre></div></div>
+</li>
+<li>
+<p>Split a DataFrame into a list of smaller DataFrames, one per distinct value of
+the given column:</p>
+<div class="code-block"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">df</span><span class="o">.</span><span class="n">partition_by</span><span class="p">(</span><span class="s2">&#34;group&#34;</span><span class="p">)</span></span></span></code></pre></div></div>
+</li>
+</ul>
+<h3 id="summarizing-and-aggregating">Summarizing and Aggregating<a class="heading-anchor" href="#summarizing-and-aggregating" aria-label="Link to this section: Summarizing and Aggregating">#</a>
+</h3>
+<p>Split. Apply. Combine.</p>
+<ul>
+<li>
+<p>Split a DataFrame into groups by one or more columns.
+This gives you a <code>GroupBy</code> object that you then aggregate:</p>
+<div class="code-block"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">dfg</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">group_by</span><span class="p">(</span><span class="s2">&#34;x&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">dfg</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">group_by</span><span class="p">(</span><span class="s2">&#34;x&#34;</span><span class="p">,</span> <span class="s2">&#34;y&#34;</span><span class="p">)</span></span></span></code></pre></div></div>
+</li>
+<li>
+<p>Apply a ready-made summary to every group.
+Count the rows per group, take the first rows of each group, or compute the
+mean of every column per group:</p>
+<div class="code-block"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">dfg</span><span class="o">.</span><span class="n">len</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">dfg</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">dfg</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span></span></span></code></pre></div></div>
+</li>
+<li>
+<p>Apply your own function to each group when no built-in aggregation fits:</p>
+<div class="code-block"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">dfg</span><span class="o">.</span><span class="n">map_groups</span><span class="p">(</span><span class="o">...</span><span class="p">)</span></span></span></code></pre></div></div>
+</li>
+<li>
+<p>Use <code>agg()</code> for full control over the aggregation.
+Passing an expression without an aggregating method collects the values into a
+list, and naming the result with a keyword argument gives the new column a
+sensible name:</p>
+<div class="code-block"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">dfg</span><span class="o">.</span><span class="n">agg</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">dfg</span><span class="o">.</span><span class="n">agg</span><span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">&#34;y&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="n">dfg</span><span class="o">.</span><span class="n">agg</span><span class="p">(</span><span class="n">avg</span><span class="o">=</span><span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">&#34;y&#34;</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span></span></span></code></pre></div></div>
+</li>
+<li>
+<p>Use a window expression with <code>over()</code> to add an aggregation as a new column on
+the original DataFrame, without collapsing the rows:</p>
+<div class="code-block"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">df</span><span class="o">.</span><span class="n">with_columns</span><span class="p">(</span><span class="n">avg</span><span class="o">=</span><span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">&#34;y&#34;</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">over</span><span class="p">(</span><span class="s2">&#34;x&#34;</span><span class="p">))</span></span></span></code></pre></div></div>
+</li>
+<li>
+<p>Group by a time value or an index instead of by a category.
+<code>group_by_dynamic()</code> creates windows of a fixed duration, and <code>group_by</code> adds
+a regular grouping on top:</p>
+<div class="code-block"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">df</span><span class="o">.</span><span class="n">group_by_dynamic</span><span class="p">(</span><span class="s2">&#34;timestamp&#34;</span><span class="p">,</span> <span class="n">every</span><span class="o">=</span><span class="s2">&#34;1h&#34;</span><span class="p">,</span> <span class="n">group_by</span><span class="o">=</span><span class="s2">&#34;store&#34;</span><span class="p">)</span></span></span></code></pre></div></div>
+</li>
+<li>
+<p>Use <code>rolling()</code> for a window that moves with every row rather than in fixed
+steps.
+This computes a seven-day rolling sum of sales per store:</p>
+<div class="code-block"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">df</span><span class="o">.</span><span class="n">rolling</span><span class="p">(</span><span class="n">index_column</span><span class="o">=</span><span class="s2">&#34;date&#34;</span><span class="p">,</span> <span class="n">period</span><span class="o">=</span><span class="s2">&#34;7d&#34;</span><span class="p">,</span> <span class="n">group_by</span><span class="o">=</span><span class="s2">&#34;store&#34;</span><span class="p">)</span><span class="o">.</span><span class="n">agg</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">&#34;sales&#34;</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span></span></span></code></pre></div></div>
+</li>
+<li>
+<p>Create the rows that are missing from a regular time series, so that every
+interval is represented:</p>
+<div class="code-block"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">df</span><span class="o">.</span><span class="n">upsample</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="n">time_column</span><span class="o">=</span><span class="s2">&#34;date&#34;</span><span class="p">,</span> <span class="n">every</span><span class="o">=</span><span class="s2">&#34;1d&#34;</span><span class="p">,</span> <span class="n">group_by</span><span class="o">=</span><span class="s2">&#34;store&#34;</span><span class="p">,</span> <span class="n">maintain_order</span><span class="o">=</span><span class="kc">True</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span></span></span></code></pre></div></div>
+</li>
+<li>
+<p>Aggregate across columns rather than down them.
+The horizontal functions combine several columns within each row:</p>
+<div class="code-block"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">df</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">sum_horizontal</span><span class="p">(</span><span class="n">cs</span><span class="o">.</span><span class="n">numeric</span><span class="p">()))</span>
+</span></span><span class="line"><span class="cl"><span class="n">df</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">any_horizontal</span><span class="p">(</span><span class="n">cs</span><span class="o">.</span><span class="n">boolean</span><span class="p">()))</span></span></span></code></pre></div></div>
+</li>
+</ul>
+<h3 id="joining-and-concatenating">Joining and Concatenating<a class="heading-anchor" href="#joining-and-concatenating" aria-label="Link to this section: Joining and Concatenating">#</a>
+</h3>
+<p>Combine multiple DataFrames into one.</p>
+<ul>
+<li>
+<p>Join two DataFrames on a shared key.
+The default is an inner join, which keeps only the rows that match on both
+sides:</p>
+<div class="code-block"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">df</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">o</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s2">&#34;key&#34;</span><span class="p">)</span></span></span></code></pre></div></div>
+</li>
+<li>
+<p>Use <code>how</code> to choose a different join strategy.
+A left join keeps every row of <code>df</code>:</p>
+<div class="code-block"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">df</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">o</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s2">&#34;key&#34;</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s2">&#34;left&#34;</span><span class="p">)</span></span></span></code></pre></div></div>
+</li>
+<li>
+<p>When the key has a different name in each DataFrame, name both sides
+explicitly:</p>
+<div class="code-block"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">df</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">o</span><span class="p">,</span> <span class="n">left_on</span><span class="o">=</span><span class="s2">&#34;a&#34;</span><span class="p">,</span> <span class="n">right_on</span><span class="o">=</span><span class="s2">&#34;b&#34;</span><span class="p">)</span></span></span></code></pre></div></div>
+</li>
+<li>
+<p>A full outer join keeps all rows from both sides.
+Add <code>coalesce=True</code> to merge the two key columns into one:</p>
+<div class="code-block"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">df</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">o</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s2">&#34;key&#34;</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s2">&#34;full&#34;</span><span class="p">,</span> <span class="n">coalesce</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></span></span></code></pre></div></div>
+</li>
+<li>
+<p>Filtering joins return columns from <code>df</code> only, and use <code>o</code> purely as a filter.
+A semi join keeps the rows of <code>df</code> that have a match, and an anti join keeps
+the rows that do not:</p>
+<div class="code-block"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">df</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">o</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s2">&#34;key&#34;</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s2">&#34;semi&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">df</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">o</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s2">&#34;key&#34;</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s2">&#34;anti&#34;</span><span class="p">)</span></span></span></code></pre></div></div>
+</li>
+<li>
+<p>A cross join produces the Cartesian product of both DataFrames and therefore
+needs no key:</p>
+<div class="code-block"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">df</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">o</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s2">&#34;cross&#34;</span><span class="p">)</span></span></span></code></pre></div></div>
+</li>
+<li>
+<p>Join on the nearest match rather than an exact one, which is the usual way to
+line up two time series.
+Use <code>by</code> to match exactly on some columns first:</p>
+<div class="code-block"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">df</span><span class="o">.</span><span class="n">join_asof</span><span class="p">(</span><span class="n">o</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s2">&#34;ts&#34;</span><span class="p">,</span> <span class="n">by</span><span class="o">=</span><span class="s2">&#34;i&#34;</span><span class="p">)</span></span></span></code></pre></div></div>
+</li>
+<li>
+<p>Join on an arbitrary predicate for inequality or other non-equi joins:</p>
+<div class="code-block"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">df</span><span class="o">.</span><span class="n">join_where</span><span class="p">(</span><span class="n">o</span><span class="p">,</span> <span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">&#34;a&#34;</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">&#34;b&#34;</span><span class="p">))</span></span></span></code></pre></div></div>
+</li>
+</ul>
+<p>Common keyword arguments for <code>df.join()</code> are <code>left_on</code>, <code>right_on</code>, <code>coalesce</code>,
+<code>join_nulls</code>, <code>suffix</code>, and <code>validate</code>, where <code>validate</code> accepts <code>&quot;m:m&quot;</code>, <code>&quot;m:1&quot;</code>,
+<code>&quot;1:m&quot;</code>, and <code>&quot;1:1&quot;</code>.</p>
+<ul>
+<li>
+<p>Stack DataFrames on top of each other, which requires matching columns:</p>
+<div class="code-block"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">pl</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">df</span><span class="p">,</span> <span class="n">o</span><span class="p">])</span></span></span></code></pre></div></div>
+</li>
+<li>
+<p>Place DataFrames side by side instead, or take the union of their columns and
+fill in the gaps with nulls:</p>
+<div class="code-block"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">pl</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">df</span><span class="p">,</span> <span class="n">o</span><span class="p">],</span> <span class="n">how</span><span class="o">=</span><span class="s2">&#34;horizontal&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">pl</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">df</span><span class="p">,</span> <span class="n">o</span><span class="p">],</span> <span class="n">how</span><span class="o">=</span><span class="s2">&#34;diagonal&#34;</span><span class="p">)</span></span></span></code></pre></div></div>
+</li>
+<li>
+<p>Use a relaxed strategy to coerce mismatched data types instead of raising an
+error:</p>
+<div class="code-block"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">pl</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">df</span><span class="p">,</span> <span class="n">o</span><span class="p">],</span> <span class="n">how</span><span class="o">=</span><span class="s2">&#34;vertical_relaxed&#34;</span><span class="p">)</span></span></span></code></pre></div></div>
+</li>
+<li>
+<p>Update the values in <code>df</code> with the non-null values from another DataFrame,
+matching rows on a key:</p>
+<div class="code-block"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">df</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">o</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s2">&#34;id&#34;</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s2">&#34;left&#34;</span><span class="p">)</span></span></span></code></pre></div></div>
+</li>
+</ul>
+<h2 id="expressions">Expressions<a class="heading-anchor" href="#expressions" aria-label="Link to this section: Expressions">#</a>
+</h2>
+<blockquote>
+<p><strong>Definition of an expression</strong></p>
+<p>An expression is a tree of operations that describe how to construct one or more
+Series.</p>
+<ul>
+<li><strong>Series</strong>: Same-type array; column or standalone</li>
+<li><strong>Tree of operations</strong>: Single, linear, or branched</li>
+<li><strong>Describe</strong>: Passive recipe; needs function to execute</li>
+<li><strong>Construct</strong>: Output may be internal, not a new column</li>
+<li><strong>One or more</strong>: One expression can make multiple Series</li>
+</ul>
+</blockquote>
+<h3 id="beginning-expressions">Beginning Expressions<a class="heading-anchor" href="#beginning-expressions" aria-label="Link to this section: Beginning Expressions">#</a>
+</h3>
+<p>Every expression starts from a column, from all columns, or from a literal value.</p>
+<ul>
+<li>
+<p>Build an expression based on an existing column, on all columns, or on a
+literal value.
+Note that <code>pl.col(&quot;*&quot;)</code> and <code>pl.all()</code> are equivalent:</p>
+<div class="code-block"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">&#34;name&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">&#34;*&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">pl</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">pl</span><span class="o">.</span><span class="n">lit</span><span class="p">(</span><span class="s2">&#34;ok&#34;</span><span class="p">)</span></span></span></code></pre></div></div>
+</li>
+<li>
+<p>Generate a range of integers, where the stop value is exclusive.
+This produces <code>[0, 1, 2, 3, 4]</code>:</p>
+<div class="code-block"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">pl</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span></span></span></code></pre></div></div>
+</li>
+<li>
+<p>Generate a range of dates.
+The singular form produces one range, while the plural form produces a column
+of ranges, one per row.
+Integers, times, and datetimes have their own <code>*_range()</code> and <code>*_ranges()</code>
+functions:</p>
+<div class="code-block"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">pl</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">pl</span><span class="o">.</span><span class="n">date_ranges</span><span class="p">(</span><span class="o">...</span><span class="p">)</span></span></span></code></pre></div></div>
+</li>
+</ul>
+<h3 id="combining-expressions-with-arithmetic">Combining Expressions with Arithmetic<a class="heading-anchor" href="#combining-expressions-with-arithmetic" aria-label="Link to this section: Combining Expressions with Arithmetic">#</a>
+</h3>
+<p>You can perform arithmetic with both expressions and plain Python values.
+Every operator has an equivalent method, which is handy when you prefer to keep a
+chain of method calls unbroken.</p>
+<table>
+  <thead>
+      <tr>
+          <th>Operator</th>
+          <th>Method</th>
+          <th>Description</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>+</code></td>
+          <td><code>e.add(...)</code></td>
+          <td>Addition</td>
+      </tr>
+      <tr>
+          <td><code>-</code></td>
+          <td><code>e.sub(...)</code></td>
+          <td>Subtraction</td>
+      </tr>
+      <tr>
+          <td><code>*</code></td>
+          <td><code>e.mul(...)</code></td>
+          <td>Multiplication</td>
+      </tr>
+      <tr>
+          <td><code>/</code></td>
+          <td><code>e.truediv(...)</code></td>
+          <td>Division</td>
+      </tr>
+      <tr>
+          <td><code>//</code></td>
+          <td><code>e.floordiv(...)</code></td>
+          <td>Floor division</td>
+      </tr>
+      <tr>
+          <td><code>**</code></td>
+          <td><code>e.pow(...)</code></td>
+          <td>Power</td>
+      </tr>
+      <tr>
+          <td><code>%</code></td>
+          <td><code>e.mod(...)</code></td>
+          <td>Modulus</td>
+      </tr>
+      <tr>
+          <td>N/A</td>
+          <td><code>e.dot(...)</code></td>
+          <td>Dot product</td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="combining-expressions-by-comparing">Combining Expressions by Comparing<a class="heading-anchor" href="#combining-expressions-by-comparing" aria-label="Link to this section: Combining Expressions by Comparing">#</a>
+</h3>
+<p>Unlike in Python, you cannot chain multiple comparisons.
+Write <code>(pl.col(&quot;x&quot;) &gt; 0) &amp; (pl.col(&quot;x&quot;) &lt; 10)</code> rather than <code>0 &lt; pl.col(&quot;x&quot;) &lt; 10</code>.</p>
+<table>
+  <thead>
+      <tr>
+          <th>Operator</th>
+          <th>Method</th>
+          <th>Description</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>&lt;</code></td>
+          <td><code>e.lt(...)</code></td>
+          <td>Less than</td>
+      </tr>
+      <tr>
+          <td><code>&lt;=</code></td>
+          <td><code>e.le(...)</code></td>
+          <td>Less than or equal to</td>
+      </tr>
+      <tr>
+          <td><code>==</code></td>
+          <td><code>e.eq(...)</code></td>
+          <td>Equal</td>
+      </tr>
+      <tr>
+          <td><code>&gt;=</code></td>
+          <td><code>e.ge(...)</code></td>
+          <td>Greater than or equal to</td>
+      </tr>
+      <tr>
+          <td><code>&gt;</code></td>
+          <td><code>e.gt(...)</code></td>
+          <td>Greater than</td>
+      </tr>
+      <tr>
+          <td><code>!=</code></td>
+          <td><code>e.ne(...)</code></td>
+          <td>Not equal</td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="combining-expressions-with-boolean-logic">Combining Expressions with Boolean Logic<a class="heading-anchor" href="#combining-expressions-with-boolean-logic" aria-label="Link to this section: Combining Expressions with Boolean Logic">#</a>
+</h3>
+<p>Note that <code>and</code>, <code>or</code>, and <code>not</code> are reserved keywords in Python, hence the
+underscores in the method names.</p>
+<table>
+  <thead>
+      <tr>
+          <th>Operator</th>
+          <th>Method</th>
+          <th>Description</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>&amp;</code></td>
+          <td><code>e.and_(...)</code></td>
+          <td>Logical AND</td>
+      </tr>
+      <tr>
+          <td><code>|</code></td>
+          <td><code>e.or_(...)</code></td>
+          <td>Logical OR</td>
+      </tr>
+      <tr>
+          <td><code>~</code></td>
+          <td><code>e.not_()</code></td>
+          <td>Logical NOT</td>
+      </tr>
+      <tr>
+          <td><code>^</code></td>
+          <td><code>e.xor(...)</code></td>
+          <td>Logical XOR</td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="conditional-expression">Conditional Expression<a class="heading-anchor" href="#conditional-expression" aria-label="Link to this section: Conditional Expression">#</a>
+</h3>
+<p>Chain <code>when()</code> and <code>then()</code> to build a conditional expression, and close it with
+<code>otherwise()</code>.
+Conditions are evaluated in order and the first match wins, so put the most
+specific condition first:</p>
+<div class="code-block"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">df</span><span class="o">.</span><span class="n">with_columns</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="n">pl</span><span class="o">.</span><span class="n">when</span><span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">&#34;age&#34;</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">18</span><span class="p">)</span><span class="o">.</span><span class="n">then</span><span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">lit</span><span class="p">(</span><span class="s2">&#34;minor&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">      <span class="o">.</span><span class="n">when</span><span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">&#34;age&#34;</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">65</span><span class="p">)</span><span class="o">.</span><span class="n">then</span><span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">lit</span><span class="p">(</span><span class="s2">&#34;adult&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">      <span class="o">.</span><span class="n">otherwise</span><span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">lit</span><span class="p">(</span><span class="s2">&#34;senior&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">      <span class="o">.</span><span class="n">alias</span><span class="p">(</span><span class="s2">&#34;group&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span></span></span></code></pre></div></div>
+<h3 id="math-trigonometry-and-rounding">Math, Trigonometry, and Rounding<a class="heading-anchor" href="#math-trigonometry-and-rounding" aria-label="Link to this section: Math, Trigonometry, and Rounding">#</a>
+</h3>
+<ul>
+<li><code>e.abs()</code>, <code>e.sign()</code>, <code>e.exp()</code>: absolute value, sign, and exponential.</li>
+<li><code>e.cbrt()</code>, <code>e.sqrt()</code>: cube root and square root.</li>
+<li><code>e.log(...)</code>, <code>e.log10()</code>, <code>e.log1p()</code>: logarithms.</li>
+<li><code>e.cos()</code>, <code>e.sin()</code>, <code>e.tan()</code>: trigonometric functions.</li>
+<li><code>e.cosh()</code>, <code>e.sinh()</code>, <code>e.tanh()</code>: hyperbolic functions.</li>
+<li><code>e.arccos()</code>, <code>e.arcsin()</code>, <code>e.arctan()</code>: inverse trigonometric functions.</li>
+<li><code>e.arccosh()</code>, <code>e.arcsinh()</code>, <code>e.arctanh()</code>: inverse hyperbolic functions.</li>
+<li><code>e.degrees()</code>, <code>e.radians()</code>: convert between radians and degrees.</li>
+<li><code>e.ceil()</code>, <code>e.floor()</code>, <code>e.round(...)</code>: rounding.</li>
+<li><code>e.clip(...)</code>, <code>e.cut(...)</code>, <code>e.qcut(...)</code>: clip values to a range, or bin them
+into intervals of your choosing or into quantiles.</li>
+</ul>
+<h3 id="missing-values-and-shapes">Missing Values and Shapes<a class="heading-anchor" href="#missing-values-and-shapes" aria-label="Link to this section: Missing Values and Shapes">#</a>
+</h3>
+<p>In Polars, <code>null</code> means missing, whereas <code>NaN</code> is a float that results from
+undefined math such as <code>0 / 0</code>.
+The two are handled by separate methods.</p>
+<ul>
+<li><code>e.fill_nan(...)</code>, <code>e.fill_null(...)</code>: fill missing values.</li>
+<li><code>e.is_finite()</code>, <code>e.is_infinite()</code>: check for finite and infinite values.</li>
+<li><code>e.is_nan()</code>, <code>e.is_not_nan()</code>: check for NaN.</li>
+<li><code>e.is_null()</code>, <code>e.is_not_null()</code>: check for null.</li>
+<li><code>e.drop_nans()</code>, <code>e.drop_nulls()</code>: drop missing values.</li>
+<li><code>e.flatten()</code>, <code>e.reshape(...)</code>: reshape a list or column.</li>
+<li><code>e.explode()</code>, <code>e.implode()</code>: turn a list into rows, or gather rows into a list.</li>
+</ul>
+<h3 id="shifts-cumulative-and-rolling">Shifts, Cumulative, and Rolling<a class="heading-anchor" href="#shifts-cumulative-and-rolling" aria-label="Link to this section: Shifts, Cumulative, and Rolling">#</a>
+</h3>
+<ul>
+<li><code>e.backward_fill(...)</code>, <code>e.forward_fill(...)</code>: fill nulls from the next or the
+previous value.</li>
+<li><code>e.interpolate(...)</code>, <code>e.shift(...)</code>: interpolate between known values, or move
+values up or down.</li>
+<li><code>e.cum_count(...)</code>, <code>e.cum_sum(...)</code>: cumulative count and sum.</li>
+<li><code>e.cum_max(...)</code>, <code>e.cum_min(...)</code>: cumulative maximum and minimum.</li>
+<li><code>e.diff(...)</code>, <code>e.pct_change(...)</code>: difference and percentage change between
+rows.</li>
+<li><code>e.ewm_mean(...)</code>, <code>e.ewm_std(...)</code>, <code>e.ewm_var(...)</code>: exponentially weighted
+moving statistics.</li>
+<li><code>e.rolling_max(...)</code>, <code>e.rolling_min(...)</code>: rolling maximum and minimum.</li>
+<li><code>e.rolling_mean(...)</code>, <code>e.rolling_median(...)</code>: rolling mean and median.</li>
+<li><code>e.rolling_std(...)</code>, <code>e.rolling_var(...)</code>: rolling standard deviation and
+variance.</li>
+<li><code>e.rolling_map(...)</code>: apply your own function over a rolling window.</li>
+</ul>
+<h3 id="sorting-ranking-and-boolean">Sorting, Ranking, and Boolean<a class="heading-anchor" href="#sorting-ranking-and-boolean" aria-label="Link to this section: Sorting, Ranking, and Boolean">#</a>
+</h3>
+<ul>
+<li><code>e.sort(...)</code>, <code>e.sort_by(...)</code>: sort a column by its own values, or by the
+values of other columns.</li>
+<li><code>e.arg_sort(...)</code>: return the row indices that would sort the column.</li>
+<li><code>e.shuffle(...)</code>, <code>e.reverse()</code>: shuffle values randomly, or reverse their
+order.</li>
+<li><code>e.rank(...)</code>: assign ranks to the data.</li>
+<li><code>e.is_duplicated()</code>, <code>e.is_unique()</code>: mark which values are duplicated and
+which are unique.</li>
+<li><code>e.is_first_distinct()</code>, <code>e.is_last_distinct()</code>: mark the first or the last
+occurrence of each distinct value.</li>
+</ul>
+<h3 id="summaries-and-statistics">Summaries and Statistics<a class="heading-anchor" href="#summaries-and-statistics" aria-label="Link to this section: Summaries and Statistics">#</a>
+</h3>
+<ul>
+<li><code>e.all(...)</code>, <code>e.any(...)</code>: true if all or any of the values are true.</li>
+<li><code>e.max()</code>, <code>e.min()</code>, <code>e.mean()</code>: maximum, minimum, and mean.</li>
+<li><code>e.nan_max()</code>, <code>e.nan_min()</code>: maximum and minimum that propagate NaN.</li>
+<li><code>e.median()</code>, <code>e.std()</code>, <code>e.var(...)</code>: median, standard deviation, and variance.</li>
+<li><code>e.entropy(...)</code>, <code>e.kurtosis(...)</code>, <code>e.skew(...)</code>: distribution statistics.</li>
+<li><code>e.product()</code>, <code>e.quantile(...)</code>, <code>e.sum()</code>: product, quantile, and sum.</li>
+<li><code>e.arg_max()</code>, <code>e.arg_min()</code>: index of the maximum and minimum value.</li>
+<li><code>e.first()</code>, <code>e.last()</code>, <code>e.get(...)</code>: get a value by position.</li>
+<li><code>e.mode()</code>: the most frequently occurring values.</li>
+</ul>
+<h3 id="counting-unique-and-selection">Counting, Unique, and Selection<a class="heading-anchor" href="#counting-unique-and-selection" aria-label="Link to this section: Counting, Unique, and Selection">#</a>
+</h3>
+<ul>
+<li><code>e.len()</code>: count all rows, including nulls.</li>
+<li><code>e.count()</code>: count only the non-null values.</li>
+<li><code>e.null_count()</code>: count the null values.</li>
+<li><code>e.n_unique()</code>, <code>e.approx_n_unique()</code>: number of unique values, exactly or
+approximately.</li>
+<li><code>e.arg_unique()</code>, <code>e.unique(...)</code>: indices of the unique values, or the unique
+values themselves.</li>
+<li><code>e.unique_counts()</code>, <code>e.value_counts(...)</code>: how often each unique value occurs.</li>
+<li><code>e.head(...)</code>, <code>e.tail(...)</code>, <code>e.limit(...)</code>: select rows from the start or the
+end.</li>
+<li><code>e.bottom_k(...)</code>, <code>e.top_k(...)</code>: the <em>k</em> smallest or largest values.</li>
+<li><code>e.gather(...)</code>, <code>e.gather_every(...)</code>: take values by index, or take every
+<em>n</em>th value.</li>
+<li><code>e.sample(...)</code>, <code>e.slice(...)</code>: sample or slice within an expression.</li>
+<li><code>e.arg_true()</code>: the indices where the value is true.</li>
+<li><code>e.replace(...)</code>: replace values using a dictionary.</li>
+<li><code>e.search_sorted(...)</code>: find the insertion index in a sorted column.</li>
+</ul>
+<h3 id="arrays-and-lists">Arrays and Lists<a class="heading-anchor" href="#arrays-and-lists" aria-label="Link to this section: Arrays and Lists">#</a>
+</h3>
+<p>Arrays have a fixed length; lists do not.
+Array methods live under the <code>arr</code> namespace and list methods under <code>list</code>.</p>
+<ul>
+<li>
+<p>Cast a column to an array of a fixed length, then use the array namespace:</p>
+<div class="code-block"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">e</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">Array</span><span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">Int8</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="n">e</span><span class="o">.</span><span class="n">arr</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">e</span><span class="o">.</span><span class="n">arr</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span></span></span></code></pre></div></div>
+</li>
+<li>
+<p>Combine several columns into a single list column:</p>
+<div class="code-block"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">pl</span><span class="o">.</span><span class="n">list</span><span class="p">(</span><span class="s2">&#34;a&#34;</span><span class="p">,</span> <span class="s2">&#34;b&#34;</span><span class="p">)</span></span></span></code></pre></div></div>
+</li>
+<li>
+<p>Work with the contents of a list column: get the length of each list, get an
+element by index, sort the elements within each list, join them into a single
+string, or test whether a value is present:</p>
+<div class="code-block"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">e</span><span class="o">.</span><span class="n">list</span><span class="o">.</span><span class="n">len</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">e</span><span class="o">.</span><span class="n">list</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">e</span><span class="o">.</span><span class="n">list</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">e</span><span class="o">.</span><span class="n">list</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&#34;-&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">e</span><span class="o">.</span><span class="n">list</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span></span></span></code></pre></div></div>
+</li>
+</ul>
+<h3 id="categoricals-and-enums">Categoricals and Enums<a class="heading-anchor" href="#categoricals-and-enums" aria-label="Link to this section: Categoricals and Enums">#</a>
+</h3>
+<p>Categoricals infer their categories from the data and sort lexically, whereas Enums
+are fixed up front and sort in declaration order.</p>
+<ul>
+<li>
+<p>Cast a String column to a Categorical, or to an Enum with an exact set of
+allowed values:</p>
+<div class="code-block"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">e</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">Categorical</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">e</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">Enum</span><span class="p">([</span><span class="s2">&#34;Good&#34;</span><span class="p">,</span> <span class="s2">&#34;Bad&#34;</span><span class="p">]))</span></span></span></code></pre></div></div>
+</li>
+<li>
+<p>Retrieve the categories that a Categorical column ended up with:</p>
+<div class="code-block"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">e</span><span class="o">.</span><span class="n">cat</span><span class="o">.</span><span class="n">get_categories</span><span class="p">()</span></span></span></code></pre></div></div>
+</li>
+</ul>
+<h3 id="dates-datetimes-times-and-durations">Dates, Datetimes, Times, and Durations<a class="heading-anchor" href="#dates-datetimes-times-and-durations" aria-label="Link to this section: Dates, Datetimes, Times, and Durations">#</a>
+</h3>
+<p>Dates track days, whereas Datetimes track microseconds.
+Methods for working with them live under the <code>dt</code> namespace.</p>
+<ul>
+<li>
+<p>Construct a Date, a Datetime, or a Duration from their components:</p>
+<div class="code-block"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">pl</span><span class="o">.</span><span class="n">date</span><span class="p">(</span><span class="mi">2026</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">31</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">pl</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2026</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">23</span><span class="p">,</span> <span class="mi">59</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">pl</span><span class="o">.</span><span class="n">duration</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span></span></span></code></pre></div></div>
+</li>
+<li>
+<p>Extract a single component, such as the month:</p>
+<div class="code-block"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">e</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">month</span><span class="p">()</span></span></span></code></pre></div></div>
+</li>
+<li>
+<p>Replace individual time units, leaving the rest untouched:</p>
+<div class="code-block"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">e</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="o">...</span><span class="p">)</span></span></span></code></pre></div></div>
+</li>
+<li>
+<p>Format a datetime as a string using a format specification:</p>
+<div class="code-block"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">e</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="o">...</span><span class="p">)</span></span></span></code></pre></div></div>
+</li>
+<li>
+<p>Convert a datetime to another time zone:</p>
+<div class="code-block"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">e</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">convert_time_zone</span><span class="p">(</span><span class="s2">&#34;UTC&#34;</span><span class="p">)</span></span></span></code></pre></div></div>
+</li>
+<li>
+<p>Express a duration as a number of seconds:</p>
+<div class="code-block"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">e</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">()</span></span></span></code></pre></div></div>
+</li>
+</ul>
+<h3 id="strings">Strings<a class="heading-anchor" href="#strings" aria-label="Link to this section: Strings">#</a>
+</h3>
+<p>Strings are UTF-8, so lengths and slices count characters, not bytes.
+String methods live under the <code>str</code> namespace.</p>
+<ul>
+<li><code>e.str.contains(...)</code>: check whether each value matches a regular expression.</li>
+<li><code>e.str.split(...)</code>: split each value by a separator into a list.</li>
+<li><code>e.str.to_uppercase()</code>: make each value all-caps.</li>
+<li><code>e.str.to_datetime()</code>: parse each value into a Datetime.</li>
+<li><code>e.str.extract(r&quot;(\d+)&quot;)</code>: extract the first regular expression capture group.</li>
+<li><code>e.str.strip_chars(...)</code>: trim whitespace, or other characters you specify, from
+both ends.</li>
+</ul>
+<h3 id="structs">Structs<a class="heading-anchor" href="#structs" aria-label="Link to this section: Structs">#</a>
+</h3>
+<p>A struct groups multiple columns into a single row element.
+Struct methods live under the <code>struct</code> namespace.</p>
+<ul>
+<li>
+<p>Combine columns into a Struct, then extract a single field back out:</p>
+<div class="code-block"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">pl</span><span class="o">.</span><span class="n">struct</span><span class="p">(</span><span class="s2">&#34;a&#34;</span><span class="p">,</span> <span class="s2">&#34;b&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">e</span><span class="o">.</span><span class="n">struct</span><span class="o">.</span><span class="n">field</span><span class="p">(</span><span class="o">...</span><span class="p">)</span></span></span></code></pre></div></div>
+</li>
+<li>
+<p>Rename the fields of a Struct, or add and adjust fields:</p>
+<div class="code-block"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">e</span><span class="o">.</span><span class="n">struct</span><span class="o">.</span><span class="n">rename_fields</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">e</span><span class="o">.</span><span class="n">struct</span><span class="o">.</span><span class="n">with_fields</span><span class="p">(</span><span class="o">...</span><span class="p">)</span></span></span></code></pre></div></div>
+</li>
+</ul>
+<h3 id="binaries">Binaries<a class="heading-anchor" href="#binaries" aria-label="Link to this section: Binaries">#</a>
+</h3>
+<p>Use the <code>bin</code> namespace for raw byte data and for base64 and hexadecimal
+conversions.</p>
+<ul>
+<li>
+<p>Decode a base64 string, or encode bytes as a hexadecimal string:</p>
+<div class="code-block"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">e</span><span class="o">.</span><span class="n">bin</span><span class="o">.</span><span class="n">base64_decode</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">e</span><span class="o">.</span><span class="n">bin</span><span class="o">.</span><span class="n">hex_encode</span><span class="p">()</span></span></span></code></pre></div></div>
+</li>
+</ul>
+<h3 id="output-names">Output Names<a class="heading-anchor" href="#output-names" aria-label="Link to this section: Output Names">#</a>
+</h3>
+<p>Control the final column names of your expressions with the <code>name</code> namespace.</p>
+<ul>
+<li>
+<p>Add a prefix to the existing name, or lowercase it:</p>
+<div class="code-block"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">e</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">prefix</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">e</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">to_lowercase</span><span class="p">()</span></span></span></code></pre></div></div>
+</li>
+</ul>
+<h3 id="meta">Meta<a class="heading-anchor" href="#meta" aria-label="Link to this section: Meta">#</a>
+</h3>
+<p>Introspection methods, primarily used when writing plugins, live under the <code>meta</code>
+namespace.</p>
+<ul>
+<li><code>e.meta.output_name()</code>: get the name the expression will output.</li>
+<li><code>e.meta.is_regex()</code>: check whether the expression is a regular expression.</li>
+<li><code>e.meta.has_multiple_outputs()</code>: check whether the expression produces multiple
+outputs.</li>
+</ul>
+<h2 id="styling-data">Styling Data<a class="heading-anchor" href="#styling-data" aria-label="Link to this section: Styling Data">#</a>
+</h2>
+<p>Use <a href="https://posit-dev.github.io/great-tables/" target="_blank" rel="noopener">Great Tables</a> to turn a DataFrame
+into a presentation-ready table.
+Start from <code>GT(df)</code> and chain the methods that set up the stub and header, format
+the values, and add color:</p>
+<div class="code-block"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">great_tables</span> <span class="kn">import</span> <span class="n">GT</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="n">GT</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="o">.</span><span class="n">tab_stub</span><span class="p">(</span><span class="n">rowname_col</span><span class="o">=</span><span class="s2">&#34;...&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="o">.</span><span class="n">cols_label</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="o">.</span><span class="n">tab_header</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&#34;...&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="o">.</span><span class="n">fmt_number</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="o">.</span><span class="n">fmt_nanoplot</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="o">.</span><span class="n">data_color</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s2">&#34;...&#34;</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="s2">&#34;...&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span></span></span></code></pre></div></div>
+<p><div class="not-prose"><picture>
+      <source type="image/webp" srcset="/resources/cheatsheets/polars/ppdg_1625_hu_293b9122a53b47af.webp 320w, /resources/cheatsheets/polars/ppdg_1625_hu_79a7a0f8876c878f.webp 640w, /resources/cheatsheets/polars/ppdg_1625_hu_f0b51799d954dfa6.webp 960w, /resources/cheatsheets/polars/ppdg_1625_hu_af19312cc689f761.webp 1280w, /resources/cheatsheets/polars/ppdg_1625_hu_5f909b07a709554b.webp 1600w, /resources/cheatsheets/polars/ppdg_1625_hu_f1741e3e937afa88.webp 1920w" sizes="(min-width: 1024px) 100vw, 50vw" />
+      <source type="image/jpeg" srcset="/resources/cheatsheets/polars/ppdg_1625_hu_98c0de044463ba0f.jpg 320w, /resources/cheatsheets/polars/ppdg_1625_hu_9e05b5e4b64e1e92.jpg 640w, /resources/cheatsheets/polars/ppdg_1625_hu_52a0bb0e2ec6eb4.jpg 960w, /resources/cheatsheets/polars/ppdg_1625_hu_b8b49ba98dc08a08.jpg 1280w, /resources/cheatsheets/polars/ppdg_1625_hu_9a97e4c1d709c222.jpg 1600w, /resources/cheatsheets/polars/ppdg_1625_hu_4cdd2269b1797f88.jpg 1920w" sizes="(min-width: 1024px) 100vw, 50vw" />
+      <img class="h-auto max-w-full rounded-lg" src="/resources/cheatsheets/polars/ppdg_1625_hu_9e05b5e4b64e1e92.jpg" width="3712" height="3430" alt="Great Tables example" title="Great Tables example" loading="lazy" />
+    </picture></div>
+</p>
+<h2 id="visualizing-data">Visualizing Data<a class="heading-anchor" href="#visualizing-data" aria-label="Link to this section: Visualizing Data">#</a>
+</h2>
+<p>The built-in plotting methods use Altair under the hood, and are available from the
+<code>plot</code> namespace:</p>
+<div class="code-block"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">df</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s2">&#34;...&#34;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&#34;...&#34;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&#34;...&#34;</span><span class="p">)</span></span></span></code></pre></div></div>
+<p><div class="not-prose"><picture>
+      <source type="image/webp" srcset="/resources/cheatsheets/polars/ppdg_1602_hu_95bb31aae433f19e.webp 320w, /resources/cheatsheets/polars/ppdg_1602_hu_532e31adc039aa96.webp 640w, /resources/cheatsheets/polars/ppdg_1602_hu_cf57ac26e80a4efd.webp 960w, /resources/cheatsheets/polars/ppdg_1602_hu_7bb312aa73e3bfd8.webp 1280w, /resources/cheatsheets/polars/ppdg_1602_hu_f260b301d6702be.webp 1600w" sizes="(min-width: 1024px) 100vw, 50vw" />
+      <source type="image/jpeg" srcset="/resources/cheatsheets/polars/ppdg_1602_hu_4302886a6738d040.jpg 320w, /resources/cheatsheets/polars/ppdg_1602_hu_1604fa7555a82aa9.jpg 640w, /resources/cheatsheets/polars/ppdg_1602_hu_378f0a51e65c5ec3.jpg 960w, /resources/cheatsheets/polars/ppdg_1602_hu_bff27cf1ca6a1212.jpg 1280w, /resources/cheatsheets/polars/ppdg_1602_hu_f3175c4aab0987c3.jpg 1600w" sizes="(min-width: 1024px) 100vw, 50vw" />
+      <img class="h-auto max-w-full rounded-lg" src="/resources/cheatsheets/polars/ppdg_1602_hu_1604fa7555a82aa9.jpg" width="1781" height="1389" alt="Altair scatter plot" title="Altair scatter plot" loading="lazy" />
+    </picture></div>
+</p>
+<p>Many other packages can work with Polars DataFrames directly, including
+<a href="https://plotnine.org/" target="_blank" rel="noopener">Plotnine</a>, Plotly, hvPlot, Seaborn, and Matplotlib.
+For anything that cannot, convert to pandas first with <code>df.to_pandas()</code>.</p>
+<div class="code-block"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">plotnine</span> <span class="kn">import</span> <span class="o">*</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">ggplot</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s2">&#34;&#34;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&#34;&#34;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&#34;&#34;</span><span class="p">))</span> <span class="o">+</span> <span class="n">geom_point</span><span class="p">()</span></span></span></code></pre></div></div>
+<p><div class="not-prose"><picture>
+      <source type="image/webp" srcset="/resources/cheatsheets/polars/ppdg_0103_hu_a69e398d5a24545.webp 320w, /resources/cheatsheets/polars/ppdg_0103_hu_7d2372476bbc3402.webp 640w, /resources/cheatsheets/polars/ppdg_0103_hu_c41775e4a2d36467.webp 960w, /resources/cheatsheets/polars/ppdg_0103_hu_995c02cc956d1db1.webp 1280w, /resources/cheatsheets/polars/ppdg_0103_hu_90d14306a5d4630.webp 1600w, /resources/cheatsheets/polars/ppdg_0103_hu_dbb6e2ca7b6a5dfb.webp 1920w" sizes="(min-width: 1024px) 100vw, 50vw" />
+      <source type="image/jpeg" srcset="/resources/cheatsheets/polars/ppdg_0103_hu_14f942b4f8b6139e.jpg 320w, /resources/cheatsheets/polars/ppdg_0103_hu_e8499e67da0ee6f0.jpg 640w, /resources/cheatsheets/polars/ppdg_0103_hu_52796b48504bea32.jpg 960w, /resources/cheatsheets/polars/ppdg_0103_hu_a10d6e7201fbad27.jpg 1280w, /resources/cheatsheets/polars/ppdg_0103_hu_39f0d524d94b0d9a.jpg 1600w, /resources/cheatsheets/polars/ppdg_0103_hu_2a2dec8007de9233.jpg 1920w" sizes="(min-width: 1024px) 100vw, 50vw" />
+      <img class="h-auto max-w-full rounded-lg" src="/resources/cheatsheets/polars/ppdg_0103_hu_e8499e67da0ee6f0.jpg" width="4200" height="5400" alt="Plotnine point plot" title="Plotnine point plot" loading="lazy" />
+    </picture></div>
+</p>
+<h2 id="polars-cloud">Polars Cloud<a class="heading-anchor" href="#polars-cloud" aria-label="Link to this section: Polars Cloud">#</a>
+</h2>
+<p>Execute a query on a cluster of instances in your own environment.
+Describe the compute you want with a <code>ComputeContext</code>, then run a LazyFrame
+remotely against it:</p>
+<div class="code-block"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">polars_cloud</span> <span class="k">as</span> <span class="nn">pc</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">ctx</span> <span class="o">=</span> <span class="n">pc</span><span class="o">.</span><span class="n">ComputeContext</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="n">workspace</span><span class="o">=</span><span class="s2">&#34;workspace_name&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">cpus</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">memory</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">cluster_size</span><span class="o">=</span><span class="mi">32</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">lf</span><span class="o">.</span><span class="n">remote</span><span class="p">(</span><span class="n">ctx</span><span class="p">)</span><span class="o">.</span><span class="n">execute</span><span class="p">()</span><span class="o">.</span><span class="n">await_result</span><span class="p">()</span></span></span></code></pre></div></div>
+<h2 id="book">Book<a class="heading-anchor" href="#book" aria-label="Link to this section: Book">#</a>
+</h2>
+<p><a href="https://polarsguide.com" style="float: right; margin-left: 1.5rem; margin-bottom: 1rem; margin-top: 0;"><img src="pp-cover.jpg" alt="Python Polars: The Definitive Guide" style="height: 10rem; border-radius: 0.25rem; border: 1px solid #414140; margin: 0;"></a>
+This cheatsheet is based on the book <em>Python Polars: The Definitive Guide</em> by
+Jeroen Janssens and Thijs Nieuwdorp, published by O&rsquo;Reilly.
+The book is available in both print and ebook formats at your favorite bookstore.
+Visit <a href="https://polarsguide.com" target="_blank" rel="noopener">polarsguide.com</a> for details.</p>
+
+        </div>
+        
+
+
+        
+        
+        
+
+
+
+      </div><aside class="hidden md:block md:w-48 lg:w-64 shrink-0">
+        <div class="sticky top-8 max-h-[calc(100vh-4rem)] overflow-y-auto"><nav class="blog-toc">
+            <h2 class="blog-toc-heading"></h2>
+            <div class="blog-toc-content">
+              <nav id="TableOfContents">
+  <ul>
+    <li><a href="#data-structures">Data Structures</a></li>
+    <li><a href="#eager-and-lazy-apis">Eager and Lazy APIs</a></li>
+    <li><a href="#data-types">Data Types</a>
+      <ul>
+        <li><a href="#inspecting-types">Inspecting Types</a></li>
+        <li><a href="#casting">Casting</a></li>
+      </ul>
+    </li>
+    <li><a href="#reading-and-writing-data">Reading and Writing Data</a></li>
+    <li><a href="#transforming-data">Transforming Data</a>
+      <ul>
+        <li><a href="#selecting-columns">Selecting Columns</a></li>
+        <li><a href="#creating-columns">Creating Columns</a></li>
+        <li><a href="#filtering-rows">Filtering Rows</a></li>
+        <li><a href="#slicing-and-sampling-rows">Slicing and Sampling Rows</a></li>
+        <li><a href="#sorting-rows">Sorting Rows</a></li>
+        <li><a href="#reshaping">Reshaping</a></li>
+        <li><a href="#summarizing-and-aggregating">Summarizing and Aggregating</a></li>
+        <li><a href="#joining-and-concatenating">Joining and Concatenating</a></li>
+      </ul>
+    </li>
+    <li><a href="#expressions">Expressions</a>
+      <ul>
+        <li><a href="#beginning-expressions">Beginning Expressions</a></li>
+        <li><a href="#combining-expressions-with-arithmetic">Combining Expressions with Arithmetic</a></li>
+        <li><a href="#combining-expressions-by-comparing">Combining Expressions by Comparing</a></li>
+        <li><a href="#combining-expressions-with-boolean-logic">Combining Expressions with Boolean Logic</a></li>
+        <li><a href="#conditional-expression">Conditional Expression</a></li>
+        <li><a href="#math-trigonometry-and-rounding">Math, Trigonometry, and Rounding</a></li>
+        <li><a href="#missing-values-and-shapes">Missing Values and Shapes</a></li>
+        <li><a href="#shifts-cumulative-and-rolling">Shifts, Cumulative, and Rolling</a></li>
+        <li><a href="#sorting-ranking-and-boolean">Sorting, Ranking, and Boolean</a></li>
+        <li><a href="#summaries-and-statistics">Summaries and Statistics</a></li>
+        <li><a href="#counting-unique-and-selection">Counting, Unique, and Selection</a></li>
+        <li><a href="#arrays-and-lists">Arrays and Lists</a></li>
+        <li><a href="#categoricals-and-enums">Categoricals and Enums</a></li>
+        <li><a href="#dates-datetimes-times-and-durations">Dates, Datetimes, Times, and Durations</a></li>
+        <li><a href="#strings">Strings</a></li>
+        <li><a href="#structs">Structs</a></li>
+        <li><a href="#binaries">Binaries</a></li>
+        <li><a href="#output-names">Output Names</a></li>
+        <li><a href="#meta">Meta</a></li>
+      </ul>
+    </li>
+    <li><a href="#styling-data">Styling Data</a></li>
+    <li><a href="#visualizing-data">Visualizing Data</a></li>
+    <li><a href="#polars-cloud">Polars Cloud</a></li>
+    <li><a href="#book">Book</a></li>
+  </ul>
+</nav>
+            </div>
+          </nav></div>
+      </aside>
+    </div>
+  </div>
+  
+  
+  <div class="mt-12 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+    <div id="featured-software" class="mb-6">
+      <h2 id="featured-software" class="text-2xl font-medium text-gray-800 mb-4">Featured software<a class="heading-anchor" href="#featured-software" aria-label="Link to this section: Featured software">#</a>
+</h2>
+
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      
+      
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+  
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+  
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="item-851aef731558d56a6b5593702ef2c5f9" class="@container h-full">
+  <a href="/software/great-tables/" title="Great Tables"
+     class="card-link flex flex-col @venti:flex-row rounded-xl  h-full">
+
+      
+
+
+
+      
+      
+        
+        <span class="card-badge absolute top-2 @max-venti:right-2 @venti:left-2 z-10">
+
+          <span class="icon-[boxicons--hexagon-filled]"></span>
+          <span class="font-semibold uppercase tracking-wide hidden @short:inline">software</span>
+
+        </span>
+      
+      
+
+    
+    
+    <div class="w-full @venti:w-1/2 @venti:self-center aspect-[40/21] flex-shrink-0 flex items-center justify-center overflow-hidden rounded-xl" style="background-color: color-mix(in srgb, #febff0 25%, white 75%);">
+      
+        
+
+
+
+
+
+
+
+
+
+  
+  
+    
+    
+
+    
+
+    
+      
+      
+
+      
+      
+      
+
+      
+      
+      
+      
+
+      <picture class="hidden @max-tall:block w-full h-full">
+        <source
+          type="image/webp"
+          srcset="/software/great-tables/great-tables_hu_e87d0b799bd5cac5.webp 1x,
+                  /software/great-tables/great-tables_hu_638d4a6e97755749.webp 2x" />
+        <img
+          src="/software/great-tables/great-tables_hu_7c715ddf8f348d.png"
+          srcset="/software/great-tables/great-tables_hu_7c715ddf8f348d.png 1x,
+                  /software/great-tables/great-tables_hu_97a37fdd7c8a0a63.png 2x"
+          alt="Great Tables"
+          class="mx-auto h-full object-contain px-[20%] py-[5%]"
+          loading="lazy" />
+      </picture>
+    
+      
+      
+
+      
+      
+      
+
+      
+      
+      
+      
+
+      <picture class="hidden @tall:@max-grande:block w-full h-full">
+        <source
+          type="image/webp"
+          srcset="/software/great-tables/great-tables_hu_638d4a6e97755749.webp 1x,
+                  /software/great-tables/great-tables_hu_de4187b24e991c7d.webp 2x" />
+        <img
+          src="/software/great-tables/great-tables_hu_97a37fdd7c8a0a63.png"
+          srcset="/software/great-tables/great-tables_hu_97a37fdd7c8a0a63.png 1x,
+                  /software/great-tables/great-tables_hu_564f0ce79c609dcf.png 2x"
+          alt="Great Tables"
+          class="mx-auto h-full object-contain px-[20%] py-[5%]"
+          loading="lazy" />
+      </picture>
+    
+      
+      
+
+      
+      
+      
+
+      
+      
+      
+      
+
+      <picture class="hidden @grande:block w-full h-full">
+        <source
+          type="image/webp"
+          srcset="/software/great-tables/great-tables_hu_de4187b24e991c7d.webp 1x,
+                  /software/great-tables/great-tables_hu_30de75054e76b746.webp 2x" />
+        <img
+          src="/software/great-tables/great-tables_hu_564f0ce79c609dcf.png"
+          srcset="/software/great-tables/great-tables_hu_564f0ce79c609dcf.png 1x,
+                  /software/great-tables/great-tables_hu_22e53f53eb08f206.png 2x"
+          alt="Great Tables"
+          class="mx-auto h-full object-contain px-[20%] py-[5%]"
+          loading="lazy" />
+      </picture>
+    
+  
+  
+
+
+      
+    </div>
+
+    
+    <div class="hidden gap-y-2 @nip:flex @venti:w-1/2 flex-auto flex-col p-3 @venti:pl-5 text-gray-700 mt-2">
+
+      
+      
+
+      
+      
+      <div class="hidden @short:flex flex-wrap gap-x-2 items-center text-xs font-medium text-gray-500">
+        
+        
+        
+        
+        
+          <div class="flex gap-1 items-center">
+            <span class="icon-[boxicons--star-filled]"></span>
+            <span>2.7k</span>
+          </div>
+        
+      </div>
+      
+
+      
+      <h3 class="m-0! mt-3 font-semibold text-sm @grande:text-lg @venti:text-xl @trenta:text-2xl line-clamp-2 text-sm @tall:text-base @grande:text-lg @venti:text-xl @trenta:text-2xl text-gray-600">Great Tables</h3>
+      
+
+      
+        <p class="m-0! text-xs @short:text-sm @grande:text-md @venti:text-md @trenta:text-lg line-clamp-2 short@line-clamp-3 @tall:line-clamp-3 font-medium text-gray-600">Make awesome display tables using Python</p>
+      
+
+      
+
+      <div class="grow"></div>
+      
+        
+          <div class="hidden @grande:flex flex-wrap gap-x-1 gap-y-4 py-2 overflow-hidden h-10 items-end">
+            
+              <span class="pill">
+                Best Practices
+              </span>
+            
+              <span class="pill">
+                Publishing
+              </span>
+            
+              <span class="pill">
+                Visualization
+              </span>
+            
+          </div>
+        
+      
+    </div>
+  </a>
+</div>
+
+
+      
+      
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+  
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="item-10891964ca1c47efefdf9e5463fed223" class="@container h-full">
+  <a href="/software/plotnine/" title="plotnine"
+     class="card-link flex flex-col @venti:flex-row rounded-xl  h-full">
+
+      
+
+
+
+      
+      
+        
+        <span class="card-badge absolute top-2 @max-venti:right-2 @venti:left-2 z-10">
+
+          <span class="icon-[boxicons--hexagon-filled]"></span>
+          <span class="font-semibold uppercase tracking-wide hidden @short:inline">software</span>
+
+        </span>
+      
+      
+
+    
+    
+    <div class="w-full @venti:w-1/2 @venti:self-center aspect-[40/21] flex-shrink-0 flex items-center justify-center overflow-hidden rounded-xl" style="background-color: color-mix(in srgb, #892C5A 25%, white 75%);">
+      
+        
+
+
+
+
+
+
+
+
+
+  
+  
+    
+    
+
+    
+
+    
+      
+      
+
+      
+      
+      
+
+      
+      
+      
+      
+
+      <picture class="hidden @max-tall:block w-full h-full">
+        <source
+          type="image/webp"
+          srcset="/software/plotnine/plotnine_hu_3cd217dc64bea98c.webp 1x,
+                  /software/plotnine/plotnine_hu_e682ba32a10b99f.webp 2x" />
+        <img
+          src="/software/plotnine/plotnine_hu_dc15fd092580a279.png"
+          srcset="/software/plotnine/plotnine_hu_dc15fd092580a279.png 1x,
+                  /software/plotnine/plotnine_hu_a87311ef981adaab.png 2x"
+          alt="plotnine"
+          class="mx-auto h-full object-contain px-[20%] py-[5%]"
+          loading="lazy" />
+      </picture>
+    
+      
+      
+
+      
+      
+      
+        
+      
+
+      
+      
+      
+      
+
+      <picture class="hidden @tall:@max-grande:block w-full h-full">
+        <source
+          type="image/webp"
+          srcset="/software/plotnine/plotnine_hu_e682ba32a10b99f.webp 1x,
+                  /software/plotnine/plotnine_hu_af157c7512fe92a4.webp 2x" />
+        <img
+          src="/software/plotnine/plotnine_hu_a87311ef981adaab.png"
+          srcset="/software/plotnine/plotnine_hu_a87311ef981adaab.png 1x,
+                  /software/plotnine/plotnine_hu_a898bd1eb5fae373.png 2x"
+          alt="plotnine"
+          class="mx-auto h-full object-contain px-[20%] py-[5%]"
+          loading="lazy" />
+      </picture>
+    
+      
+      
+
+      
+      
+        
+      
+      
+        
+      
+
+      
+      
+      
+      
+
+      <picture class="hidden @grande:block w-full h-full">
+        <source
+          type="image/webp"
+          srcset="/software/plotnine/plotnine_hu_af157c7512fe92a4.webp 1x,
+                  /software/plotnine/plotnine_hu_af157c7512fe92a4.webp 2x" />
+        <img
+          src="/software/plotnine/plotnine_hu_a898bd1eb5fae373.png"
+          srcset="/software/plotnine/plotnine_hu_a898bd1eb5fae373.png 1x,
+                  /software/plotnine/plotnine_hu_a898bd1eb5fae373.png 2x"
+          alt="plotnine"
+          class="mx-auto h-full object-contain px-[20%] py-[5%]"
+          loading="lazy" />
+      </picture>
+    
+  
+  
+
+
+      
+    </div>
+
+    
+    <div class="hidden gap-y-2 @nip:flex @venti:w-1/2 flex-auto flex-col p-3 @venti:pl-5 text-gray-700 mt-2">
+
+      
+      
+
+      
+      
+      <div class="hidden @short:flex flex-wrap gap-x-2 items-center text-xs font-medium text-gray-500">
+        
+        
+        
+        
+        
+          <div class="flex gap-1 items-center">
+            <span class="icon-[boxicons--star-filled]"></span>
+            <span>4.5k</span>
+          </div>
+        
+      </div>
+      
+
+      
+      <h3 class="m-0! mt-3 font-semibold text-sm @grande:text-lg @venti:text-xl @trenta:text-2xl line-clamp-2 text-sm @tall:text-base @grande:text-lg @venti:text-xl @trenta:text-2xl text-gray-600">plotnine</h3>
+      
+
+      
+        <p class="m-0! text-xs @short:text-sm @grande:text-md @venti:text-md @trenta:text-lg line-clamp-2 short@line-clamp-3 @tall:line-clamp-3 font-medium text-gray-600">A Grammar of Graphics for Python</p>
+      
+
+      
+
+      <div class="grow"></div>
+      
+        
+          <div class="hidden @grande:flex flex-wrap gap-x-1 gap-y-4 py-2 overflow-hidden h-10 items-end">
+            
+              <span class="pill">
+                Visualization
+              </span>
+            
+          </div>
+        
+      
+    </div>
+  </a>
+</div>
+
+
+      
+    </div>
+  </div>
+  
+
+</article>
+
+
+    </div>
+  </main>
+  <footer class="flex flex-none justify-center">
+    <footer class="w-full bg-white text-gray-700 mt-12 border-t border-blue-200">
+  <div class="flex flex-col w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-18 pb-10">
+    
+    <div class="grid grid-cols-1 md:grid-cols-7 gap-8 mb-14">
+      
+      <div class="col-span-1 md:col-span-3 md:pr-4 xl:pr-8 2xl:pr-12">
+        <a href="/" class="inline-block mb-4">
+          <span class="">
+            
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+    
+    
+    
+    
+    
+    
+    
+      
+      
+      
+      
+      
+      
+    
+    
+    
+    
+    <picture class="block w-full h-full">
+      <source
+        type="image/webp"
+        srcset="/posit-open-source-logo-light_hu_50cec5c5bc71f0ad.webp 1x,
+                /posit-open-source-logo-light_hu_c6c053415d8b5b4b.webp 2x,
+                /posit-open-source-logo-light_hu_6597dc75bc6328b2.webp 3x" />
+      <img
+        src="/posit-open-source-logo-light_hu_cb6da56f7d1f6b50.png"
+        srcset="/posit-open-source-logo-light_hu_cb6da56f7d1f6b50.png 1x,
+                /posit-open-source-logo-light_hu_e9f8e583a969442b.png 2x,
+                /posit-open-source-logo-light_hu_eb9904f999055821.png 3x"
+        alt="Posit Open Source"
+        class="h-6.5"
+        loading="lazy" />
+    </picture>
+  
+
+
+          </span>
+          <span class="hidden">
+            
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+    
+    
+    
+    
+    
+    
+    
+      
+      
+      
+      
+      
+      
+    
+    
+    
+    
+    <picture class="block w-full h-full">
+      <source
+        type="image/webp"
+        srcset="/posit-open-source-logo-dark_hu_95874f04353d47d0.webp 1x,
+                /posit-open-source-logo-dark_hu_c8593b8200d28c97.webp 2x,
+                /posit-open-source-logo-dark_hu_4cde321145fb9db1.webp 3x" />
+      <img
+        src="/posit-open-source-logo-dark_hu_921746bdc15456d9.png"
+        srcset="/posit-open-source-logo-dark_hu_921746bdc15456d9.png 1x,
+                /posit-open-source-logo-dark_hu_11400af34c931d87.png 2x,
+                /posit-open-source-logo-dark_hu_27bc459f2da0f22.png 3x"
+        alt="Posit Open Source"
+        class="h-6.5"
+        loading="lazy" />
+    </picture>
+  
+
+
+          </span>
+        </a>
+        <p class="text-sm text-gray-600">
+          Open source software and tools for data science.
+        </p>
+        <p class="text-sm mt-3 text-gray-600">
+          Visit <a class="underline" href="https://posit.co/products">posit.co</a> to learn how our enterprise products allow you to use open source tools securely, more collaboratively, and at scale.
+        </p>
+        
+      </div>
+
+      
+      <div class="col-span-1 md:col-span-2 grid grid-cols-2 gap-8">
+        
+        <div>
+          <h3 class="text-gray-900 font-semibold mb-4">Navigate</h3>
+          <ul class="space-y-2 text-sm">
+            
+            <li>
+              <a href="/software/" class="font-medium hover:text-blue-500 transition-colors">
+                Software
+              </a>
+            </li>
+            
+            <li>
+              <a href="/people/" class="font-medium hover:text-blue-500 transition-colors">
+                People
+              </a>
+            </li>
+            
+            <li>
+              <a href="/events/" class="font-medium hover:text-blue-500 transition-colors">
+                Events
+              </a>
+            </li>
+            
+            <li>
+              <a href="/resources/" class="font-medium hover:text-blue-500 transition-colors">
+                Resources
+              </a>
+            </li>
+            
+            <li>
+              <a href="/blog/" class="font-medium hover:text-blue-500 transition-colors">
+                Blog
+              </a>
+            </li>
+            
+            <li>
+              <a href="/about/" class="font-medium hover:text-blue-500 transition-colors">
+                About
+              </a>
+            </li>
+            
+          </ul>
+        </div>
+
+        
+        <div>
+          <h3 class="text-gray-900 font-semibold mb-4">Learn</h3>
+          <ul class="space-y-2 text-sm">
+            <li>
+              <a href="https://posit.co" target="_blank" rel="noopener" class="hover:text-gray-900 transition-colors">
+                Posit.co
+              </a>
+            </li>
+            <li>
+              <a href="https://posit.co/about/" target="_blank" rel="noopener" class="hover:text-gray-900 transition-colors">
+                About Posit
+              </a>
+            </li>
+            <li>
+              <a href="https://posit.co/support/" target="_blank" rel="noopener" class="hover:text-gray-900 transition-colors">
+                Support
+              </a>
+            </li>
+            <li>
+              <a href="https://github.com/posit-dev" target="_blank" rel="noopener" class="hover:text-gray-900 transition-colors">
+                GitHub
+              </a>
+            </li>
+            <li>
+              <a href="/subscribe/" class="hover:text-gray-900 transition-colors">
+                Subscribe
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      
+      <div class="col-span-1 md:col-span-2">
+        <h3 class="text-gray-900 font-semibold mb-4">Connect</h3>
+        <div class="flex flex-row flex-wrap gap-4">
+          <a href="https://github.com/posit-dev" target="_blank" rel="noopener" title="GitHub" class="text-gray-600 hover:text-gray-900 transition-colors">
+            <i class="h-6 w-6 flex-none"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+   <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5"></path>
+</svg>
+</i>
+            <span class="sr-only">GitHub</span>
+          </a>
+          <a href="https://fosstodon.org/@posit" target="_blank" rel="noopener me" title="Mastodon" class="text-gray-600 hover:text-gray-900 transition-colors">
+            <i class="h-6 w-6 flex-none"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+  <path d="M18.648 15.254c-1.816 1.763 -6.648 1.626 -6.648 1.626a18.262 18.262 0 0 1 -3.288 -.256c1.127 1.985 4.12 2.81 8.982 2.475c-1.945 2.013 -13.598 5.257 -13.668 -7.636l-.026 -1.154c0 -3.036 .023 -4.115 1.352 -5.633c1.671 -1.91 6.648 -1.666 6.648 -1.666s4.977 -.243 6.648 1.665c1.329 1.518 1.352 2.597 1.352 5.633s-.456 4.074 -1.352 4.946z"></path>
+  <path d="M12 11.204v-2.926c0 -1.258 -.895 -2.278 -2 -2.278s-2 1.02 -2 2.278v4.722m4 -4.722c0 -1.258 .895 -2.278 2 -2.278s2 1.02 2 2.278v4.722"></path>
+</svg>
+</i>
+            <span class="sr-only">Mastodon</span>
+          </a>
+          <a href="https://bsky.app/profile/posit.bsky.social" target="_blank" rel="noopener" title="Bluesky" class="text-gray-600 hover:text-gray-900 transition-colors">
+            <i class="h-6 w-6 flex-none"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+    <path
+        d="M6.335 5.144c-1.654 -1.199 -4.335 -2.127 -4.335 .826c0 .59 .35 4.953 .556 5.661c.713 2.463 3.13 2.75 5.444 2.369c-4.045 .665 -4.889 3.208 -2.667 5.41c1.03 1.018 1.913 1.59 2.667 1.59c2 0 3.134 -2.769 3.5 -3.5c.333 -.667 .5 -1.167 .5 -1.5c0 .333 .167 .833 .5 1.5c.366 .731 1.5 3.5 3.5 3.5c.754 0 1.637 -.571 2.667 -1.59c2.222 -2.203 1.378 -4.746 -2.667 -5.41c2.314 .38 4.73 .094 5.444 -2.369c.206 -.708 .556 -5.072 .556 -5.661c0 -2.953 -2.68 -2.025 -4.335 -.826c-2.293 1.662 -4.76 5.048 -5.665 6.856c-.905 -1.808 -3.372 -5.194 -5.665 -6.856z" />
+</svg>
+</i>
+            <span class="sr-only">Bluesky</span>
+          </a>
+          <a href="https://www.linkedin.com/showcase/posit-open-source/" target="_blank" rel="noopener" title="LinkedIn" class="text-gray-600 hover:text-gray-900 transition-colors">
+            <i class="h-6 w-6 flex-none"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+   <path d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z"></path>
+   <path d="M8 11l0 5"></path>
+   <path d="M8 8l0 .01"></path>
+   <path d="M12 16l0 -5"></path>
+   <path d="M16 16v-3a2 2 0 0 0 -4 0"></path>
+</svg>
+</i>
+            <span class="sr-only">LinkedIn</span>
+          </a>
+          <a href="https://youtube.com/@PositPBC" target="_blank" rel="noopener" title="YouTube" class="text-gray-600 hover:text-gray-900 transition-colors">
+            <i class="h-6 w-6 flex-none"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" class="icon icon-tabler icon-tabler-brand-youtube" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+   <path d="M2 8a4 4 0 0 1 4 -4h12a4 4 0 0 1 4 4v8a4 4 0 0 1 -4 4h-12a4 4 0 0 1 -4 -4v-8z"></path>
+   <path d="M10 9l5 3l-5 3z"></path>
+</svg>
+</i>
+            <span class="sr-only">YouTube</span>
+          </a>
+          <a href="/subscribe/" title="RSS Feeds" class="text-gray-600 hover:text-gray-900 transition-colors">
+            <i class="h-6 w-6 flex-none"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="5" cy="19" r="1" />
+  <path d="M4 4a16 16 0 0 1 16 16" />
+  <path d="M4 11a9 9 0 0 1 9 9" />
+</svg>
+</i>
+            <span class="sr-only">RSS Feeds</span>
+          </a>
+          <a href="https://plausible.io/opensource.posit.co" target="_blank" rel="noopener" title="Plausible" class="text-gray-600 hover:text-gray-900 transition-colors">
+            <i class="h-6 w-6 flex-none"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="-2 -2.67 52 69.34" fill="currentColor" stroke="none">
+   <path d="M45.2456059,22.6027536c-1.0911024,10.4557623-10.2327486,18.2272825-20.7452872,18.2272807h-4.047804v9.570007c0,5.3019285-4.2980623,9.5999908-9.5999908,9.5999908H3.3599854c-1.8556687,0-3.3599854-1.5043167-3.3599854-3.3599854v-19.7025146l5.0380685-7.0686343c.9118097-1.2793096,2.587965-1.7566996,4.0369945-1.1497867l2.8657142,1.2002785c1.4444817.6050081,3.1153774.12945,4.0247968-1.1455083l6.7172007-9.417163c.9071158-1.2717288,2.5743943-1.7450816,4.0144283-1.1397262l5.5198678,2.3204187c1.4430268.6066135,3.1137697.1319561,4.0223175-1.1427389l6.4594145-9.0625757c2.0248091,3.5597961,3.0145069,7.7887694,2.5468032,12.2706573Z"/>
+   <path d="M3.2920959,28.8726296c.82329-1.1551271,2.0209115-2.0434967,3.4138697-2.3114381,1.0861554-.2089265,2.156905-.0992829,3.1472499.3155174l2.8649902,1.1999512c.1651001.0691528.3388672.104187.5164795.104187.4365845,0,.8488159-.2124634,1.1026611-.5683594l6.5942097-9.2447929c.8231505-1.154021,2.0204067-2.0410099,3.4124878-2.3083136,1.0821376-.2077892,2.1463585-.0989034,3.1282512.3138487l5.5198364,2.3204346c.1665649.0700684.3417969.1055298.5206909.1055298.4351807,0,.8456421-.2113647,1.0979614-.5653687l6.9192505-9.7077637C37.8272145,3.3644409,31.7802174,0,24.9450124,0H3.3599904C1.5043217,0,.000005,1.5043167,.000005,3.3599854v30.1316528l3.2920909-4.6190085Z"/>
+</svg>
+</i>
+            <span class="sr-only">Plausible</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-gray-400">
+      <div class="flex items-center gap-2">
+        <i class="h-4 w-4 flex-none"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+   <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"></path>
+   <path d="M14 9.75a3.016 3.016 0 0 0 -4.163 .173a2.993 2.993 0 0 0 0 4.154a3.016 3.016 0 0 0 4.163 .173"></path>
+</svg>
+</i>
+        <span>2026 Posit Software, PBC. All rights reserved.</span>
+      </div>
+      <div class="flex flex-row gap-4">
+        <a href="https://posit.co/about/privacy-policy/" target="_blank" rel="noopener" class="hover:text-gray-900 transition-colors">
+          Privacy
+        </a>
+        <a href="https://posit.co/about/code-of-conduct/" target="_blank" rel="noopener" class="hover:text-gray-900 transition-colors">
+          Code of Conduct
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+  </footer>
+  <script src="/main.min.6bc1930b2ee28ac0867984d27bc1dcbafc6d4540fd9a8a87ae92273dfd2cd7d7.js" defer></script><script src="/js/external-links.min.1192ac971e28845380135d743f129381592e536207405163d1f116e089287e50.js" defer></script><script src="/js/ease-scroll.min.d1bb16497a20ec206abdda8d246080a7cb2a61b7ffe90ebb41b3587013618cb3.js"></script>
+
+<div class="hidden top-[34px] right-4 absolute" id="code-copy">
+  <i class="h-4.5 w-4.5 block" aria-hidden="true">
+    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copy" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M7 7m0 2.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667z" />
+  <path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1" />
+</svg>
+
+  </i>
+</div>
+<div class="hidden top-[34px] right-4 absolute" id="code-copy-done">
+  <i class="h-5 w-5 block" aria-hidden="true">
+    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-check" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M5 12l5 5l10 -10" />
+</svg>
+
+  </i>
+</div><script src="/code-copy.min.fd8262774663f05ea01a8d8e5511703c73c1478d5ada9fc4958f74e70c829760.js" defer></script>
+<script src="/gallery-lightbox.min.e0fdcd6cc0946dd810d776ca0e719cff2a50a6d8d00b86ab2c3157e6f5a3956c.js" defer></script>
+
+<div id="search-modal" class="hidden fixed inset-0 z-[100] overflow-y-auto" aria-labelledby="search-modal-title" role="dialog" aria-modal="true" data-pagefind-ignore>
+  
+  <div class="fixed inset-0 bg-blue-100/80 transition-opacity" id="search-backdrop"></div>
+
+  
+  <div class="flex min-h-full items-start justify-center p-4 sm:p-6 md:p-20">
+    <div class="relative w-full max-w-4xl transform overflow-hidden rounded-lg bg-white shadow-2xl transition-all">
+      
+      <div class="relative">
+        <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-6">
+          <i class="h-5 w-5 text-gray-400">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+    <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
+    <path d="M21 21l-6 -6" />
+</svg>
+
+          </i>
+        </div>
+        <input
+          type="text"
+          id="search-input"
+          class="block w-full border-0 bg-transparent py-4 pl-14 pr-6 text-gray-500 placeholder:text-gray-400 focus:ring-0 text-base sm:text-lg outline-none"
+          placeholder="Search..."
+          autocomplete="off"
+          spellcheck="false"
+        >
+      </div>
+
+      
+      <div class="sm:hidden w-full border-t border-blue-200 p-6">
+        <button id="mobile-filter-toggle" class="flex items-center justify-between w-full text-sm text-gray-500">
+          <span class="font-medium">Filters</span>
+          <svg class="h-5 w-5 transition-transform" id="mobile-filter-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+          </svg>
+        </button>
+      </div>
+
+      
+      <div class="flex border-t border-blue-200">
+
+        
+        <aside id="search-filters" aria-label="Search filters" role="group" class="flex-none w-full sm:w-56 border-r border-blue-200 bg-[color-mix(in_srgb,theme(colors.blue.50)_50%,theme(colors.blue.100)_50%)] p-6 overflow-y-auto hidden sm:block">
+          <h3 id="filter-heading" class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3">Filter by Type</h3>
+
+          
+          <div class="flex gap-2 mb-3 pb-3 border-b border-blue-200">
+            <button id="select-all-filters" class="text-xs text-blue-500 hover:underline" aria-label="Select all filter types">
+              Select All
+            </button>
+            <span class="text-xs text-gray-300" aria-hidden="true">|</span>
+            <button id="clear-all-filters" class="text-xs text-gray-500 hover:underline" aria-label="Clear all filter types">
+              Clear All
+            </button>
+          </div>
+
+          
+          <div role="group" aria-labelledby="filter-heading" class="space-y-2">
+            
+            <label class="flex items-center justify-between cursor-pointer group">
+              <div class="flex items-center">
+                <input
+                  type="checkbox"
+                  id="filter-software"
+                  value="Software"
+                  checked
+                  aria-label="Show Software results"
+                  class="h-4 w-4 rounded border-blue-200 text-blue-500 focus:ring-blue-500 focus:ring-offset-0 accent-blue-500"
+                >
+                <span class="ml-2 text-sm text-gray-500 group-hover:text-gray-600">Software</span>
+              </div>
+              <span id="count-software" class="text-xs text-gray-500" aria-live="polite">(0)</span>
+            </label>
+
+            
+            <label class="flex items-center justify-between cursor-pointer group">
+              <div class="flex items-center">
+                <input
+                  type="checkbox"
+                  id="filter-people"
+                  value="People"
+                  checked
+                  aria-label="Show People results"
+                  class="h-4 w-4 rounded border-blue-200 text-blue-500 focus:ring-blue-500 focus:ring-offset-0 accent-blue-500"
+                >
+                <span class="ml-2 text-sm text-gray-500 group-hover:text-gray-600">People</span>
+              </div>
+              <span id="count-people" class="text-xs text-gray-500" aria-live="polite">(0)</span>
+            </label>
+
+            
+            <label class="flex items-center justify-between cursor-pointer group">
+              <div class="flex items-center">
+                <input
+                  type="checkbox"
+                  id="filter-events"
+                  value="Events"
+                  checked
+                  aria-label="Show Events results"
+                  class="h-4 w-4 rounded border-blue-200 text-blue-500 focus:ring-blue-500 focus:ring-offset-0 accent-blue-500"
+                >
+                <span class="ml-2 text-sm text-gray-500 group-hover:text-gray-600">Events</span>
+              </div>
+              <span id="count-events" class="text-xs text-gray-500" aria-live="polite">(0)</span>
+            </label>
+
+            
+            <label class="flex items-center justify-between cursor-pointer group">
+              <div class="flex items-center">
+                <input
+                  type="checkbox"
+                  id="filter-resources"
+                  value="Resources"
+                  checked
+                  aria-label="Show Resources results"
+                  class="h-4 w-4 rounded border-blue-200 text-blue-500 focus:ring-blue-500 focus:ring-offset-0 accent-blue-500"
+                >
+                <span class="ml-2 text-sm text-gray-500 group-hover:text-gray-600">Resources</span>
+              </div>
+              <span id="count-resources" class="text-xs text-gray-500" aria-live="polite">(0)</span>
+            </label>
+
+            
+            <label class="flex items-center justify-between cursor-pointer group">
+              <div class="flex items-center">
+                <input
+                  type="checkbox"
+                  id="filter-blog"
+                  value="Blog"
+                  checked
+                  aria-label="Show Blog results"
+                  class="h-4 w-4 rounded border-blue-200 text-blue-500 focus:ring-blue-500 focus:ring-offset-0 accent-blue-500"
+                >
+                <span class="ml-2 text-sm text-gray-500 group-hover:text-gray-600">Blog</span>
+              </div>
+              <span id="count-blog" class="text-xs text-gray-500" aria-live="polite">(0)</span>
+            </label>
+
+            
+            <label class="flex items-center justify-between cursor-pointer group">
+              <div class="flex items-center">
+                <input
+                  type="checkbox"
+                  id="filter-other"
+                  value="Other"
+                  checked
+                  aria-label="Show Other results"
+                  class="h-4 w-4 rounded border-blue-200 text-blue-500 focus:ring-blue-500 focus:ring-offset-0 accent-blue-500"
+                >
+                <span class="ml-2 text-sm text-gray-500 group-hover:text-gray-600">Other</span>
+              </div>
+              <span id="count-other" class="text-xs text-gray-500" aria-live="polite">(0)</span>
+            </label>
+          </div>
+        </aside>
+
+        
+        <div class="flex-1 min-w-0">
+          
+          <div id="search-results-header" class="hidden px-6 py-2 border-b border-blue-200">
+            <p class="text-xs text-gray-500">
+              <span id="results-count-text"></span>
+            </p>
+          </div>
+
+          <div id="search-results" class="max-h-[65vh] scroll-py-2 overflow-y-auto" role="region" aria-live="polite" aria-label="Search results">
+            
+            <div id="search-loading" class="hidden py-8 text-center text-sm text-gray-500">
+              Searching...
+            </div>
+
+            
+            <div id="search-empty" class="py-8 text-center text-sm text-gray-500">
+              Type to search
+            </div>
+
+            
+            <div id="search-no-results" class="hidden py-8 text-center text-sm text-gray-500">
+              No results found
+            </div>
+
+            
+            <ul id="search-results-list" class="divide-y divide-blue-200"></ul>
+          </div>
+        </div>
+      </div>
+
+      
+      <div class="flex items-center justify-between border-t border-blue-200 px-6 py-4 text-xs text-gray-500">
+        <div class="flex items-center gap-3">
+          <kbd class="rounded border border-blue-200 bg-blue-100 px-2 py-1 font-mono">↑↓</kbd>
+          <span>Navigate</span>
+        </div>
+        <div class="flex items-center gap-3">
+          <kbd class="rounded border border-blue-200 bg-blue-100 px-2 py-1 font-mono">↵</kbd>
+          <span>Select</span>
+        </div>
+        <div class="flex items-center gap-3">
+          <kbd class="rounded border border-blue-200 bg-blue-100 px-2 py-1 font-mono">ESC</kbd>
+          <span>Close</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="/js/search.min.72be28de8beaa8914f38437575ac1094e073267cc8b1d21fc0a15e2ab8ded1d8.js" type="module" defer></script><script src="/toc-scroll.min.ca955577e8cd78ec0cc919646ceda4939076016c8c0ff3fbcc79b6784c94af96.js" defer></script><script>if(document.querySelector('[data-item-container]')){var s=document.createElement('script');s.src='\/search-filter-sort.min.749dad0b7e208fde340f091bfeb98a7dafced9f4cd5c13b372f80d4ad780491a.js';s.defer=true;document.body.appendChild(s);}</script>
+
+
+
+
+</body>
+</html>

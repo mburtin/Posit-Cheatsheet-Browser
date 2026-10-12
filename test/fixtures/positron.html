@@ -1,0 +1,1517 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+<head>
+  <title>Positron :: Posit Open Source</title>
+  
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta
+  name="description"
+  content=""
+/>
+<meta
+  name="keywords"
+  content=""
+/>
+<meta name="robots" content="noodp" />
+<link rel="canonical" href="https://opensource.posit.co/resources/cheatsheets/positron/" /><meta property="og:url" content="https://opensource.posit.co/resources/cheatsheets/positron/">
+  <meta property="og:site_name" content="Posit Open Source">
+  <meta property="og:title" content="Positron">
+  <meta property="og:description" content="Quick reference guide for positron.">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="website">
+    <meta property="og:image" content="https://opensource.posit.co/images/pos-og.png">
+
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://opensource.posit.co/images/pos-og.png">
+  <meta name="twitter:title" content="Positron">
+  <meta name="twitter:description" content="Quick reference guide for positron.">
+
+
+
+<script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"LearningResource","about":[{"@type":"SoftwareApplication","name":"positron"}],"datePublished":"2026-02-25T00:00:00+00:00","description":"Quick reference guide for positron.","encoding":{"@type":"MediaObject","contentUrl":"https://opensource.posit.co/resources/cheatsheets/positron/positron.pdf","encodingFormat":"application/pdf"},"image":"https://opensource.posit.co/resources/cheatsheets/positron/page-1.png","learningResourceType":"Cheat sheet","name":"Positron","publisher":{"@type":"Organization","logo":"https://opensource.posit.co/logo.svg","name":"Posit Software, PBC","url":"https://posit.co/"},"url":"https://opensource.posit.co/resources/cheatsheets/positron/"}
+</script>
+
+<link rel="shortcut icon" href="/favicon.ico" />
+
+
+<link rel="preload" href="/fonts/open-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/source-code-pro-latin.woff2" as="font" type="font/woff2" crossorigin>
+
+<link rel="stylesheet" href="/css/index.min.6107b5ebab3693833af7e354209b16adbd720740c802aa64f36cc2fffc1a2fee.css">
+
+
+
+
+<script async src="https://plausible.io/js/pa-ihqNTHznxB62qQp1hgnrh.js"></script>
+<script>
+  window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
+  plausible.init()
+</script>
+
+
+
+
+  
+</head>
+<body class="flex flex-col min-h-screen w-full bg-white overflow-x-clip">
+  <header id="site-header" class="flex flex-none justify-centerbg-white z-50" data-is-home="false">
+    <div class="flex flex-row gap justify-between w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-12 my-4 relative z-50">
+  <div class="flex-none content-center relative z-50">
+    <a href="/" class="block">
+      
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+    
+    
+    
+    
+    
+    
+    
+      
+      
+      
+      
+      
+      
+    
+    
+    
+    
+    <picture class="block w-full h-full">
+      <source
+        type="image/webp"
+        srcset="/posit-open-source-logo-light_hu_50cec5c5bc71f0ad.webp 1x,
+                /posit-open-source-logo-light_hu_c6c053415d8b5b4b.webp 2x,
+                /posit-open-source-logo-light_hu_6597dc75bc6328b2.webp 3x" />
+      <img
+        src="/posit-open-source-logo-light_hu_cb6da56f7d1f6b50.png"
+        srcset="/posit-open-source-logo-light_hu_cb6da56f7d1f6b50.png 1x,
+                /posit-open-source-logo-light_hu_e9f8e583a969442b.png 2x,
+                /posit-open-source-logo-light_hu_eb9904f999055821.png 3x"
+        alt="Posit Open Source"
+        class="h-6.5"
+        loading="lazy" />
+    </picture>
+  
+
+
+    </a>
+    <a href="/" class="hidden">
+      
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+    
+    
+    
+    
+    
+    
+    
+      
+      
+      
+      
+      
+      
+    
+    
+    
+    
+    <picture class="block w-full h-full">
+      <source
+        type="image/webp"
+        srcset="/posit-open-source-logo-dark_hu_95874f04353d47d0.webp 1x,
+                /posit-open-source-logo-dark_hu_c8593b8200d28c97.webp 2x,
+                /posit-open-source-logo-dark_hu_4cde321145fb9db1.webp 3x" />
+      <img
+        src="/posit-open-source-logo-dark_hu_921746bdc15456d9.png"
+        srcset="/posit-open-source-logo-dark_hu_921746bdc15456d9.png 1x,
+                /posit-open-source-logo-dark_hu_11400af34c931d87.png 2x,
+                /posit-open-source-logo-dark_hu_27bc459f2da0f22.png 3x"
+        alt="Posit Open Source"
+        class="h-6.5"
+        loading="lazy" />
+    </picture>
+  
+
+
+    </a>
+  </div>
+  
+  <div class="flex-1"></div>
+  <div class="flex-none flex items-center md:hidden relative z-50">
+    <a href="https://github.com/posit-dev/open-source-website" target="_blank" rel="noopener"
+      class="inline-flex items-center p-2 text-sm text-gray-800 rounded-lg"
+      aria-label="GitHub repository">
+      <i class="w-6 h-6">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+   <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5"></path>
+</svg>
+
+      </i>
+    </a>
+    <button id="search-toggle-mobile" type="button"
+      class="inline-flex items-center p-2 text-sm text-gray-800 rounded-lg cursor-pointer"
+      aria-label="Search">
+      <span class="sr-only"></span>
+      <i class="w-6 h-6">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+    <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
+    <path d="M21 21l-6 -6" />
+</svg>
+
+      </i>
+    </button>
+  </div>
+  <div class="flex-none relative z-50">
+    
+
+
+
+
+<nav class="h-full static flex items-center">
+  <button id="navbar-menu-toggle" type="button"
+    class="inline-flex items-center p-2 text-sm text-gray-800 rounded-lg md:hidden z-[60] relative"
+    aria-controls="navbar-menu" aria-expanded="false">
+    <span class="sr-only"></span>
+    <i class="w-6 h-6" id="menu-icon-hamburger">
+      <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-menu-2" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 6l16 0" />
+  <path d="M4 12l16 0" />
+  <path d="M4 18l16 0" />
+</svg>
+
+    </i>
+    <i class="w-6 h-6 hidden" id="menu-icon-close">
+      <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-x" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M18 6l-12 12" />
+  <path d="M6 6l12 12" />
+</svg>
+
+    </i>
+  </button>
+  <div class="fixed md:static top-20 md:top-auto left-0 right-0 bottom-0 md:bottom-auto z-[90] w-full h-0 md:h-auto md:w-auto md:opacity-100 md:visible transition-all duration-300 ease-in-out overflow-hidden md:overflow-visible" id="navbar-menu" style="transition-property: height, opacity;" data-is-home="false">
+    <div class="absolute inset-0 bg-white md:bg-transparent transition-colors duration-300" id="navbar-menu-bg"></div>
+    <ul
+      class="absolute top-4/9 -translate-y-1/2 left-0 right-0 flex flex-col mx-2 md:static md:top-auto md:translate-y-0 md:mx-0 md:flex-row md:items-center md:gap-x-0 md:border-0 text-base font-regular opacity-0 md:opacity-100 transition-opacity duration-300 md:bg-transparent md:shadow-none md:rounded-none md:border-0" id="navbar-menu-content">
+      
+      <li id="" class="">
+        <a class="block text-center md:text-left text-2xl md:text-[0.9125rem] px-2 lg:px-3 py-5 md:py-3 font-mono font-medium uppercase hover:text-blue-500"
+          href="/software/">Software</a>
+      </li>
+      
+      
+      <li id="" class="">
+        <a class="block text-center md:text-left text-2xl md:text-[0.9125rem] px-2 lg:px-3 py-5 md:py-3 font-mono font-medium uppercase hover:text-blue-500"
+          href="/people/">People</a>
+      </li>
+      
+      
+      <li id="" class="">
+        <a class="block text-center md:text-left text-2xl md:text-[0.9125rem] px-2 lg:px-3 py-5 md:py-3 font-mono font-medium uppercase hover:text-blue-500"
+          href="/events/">Events</a>
+      </li>
+      
+      
+      <li id="resources" class="relative group w-full md:w-auto">
+        <button class="dropdown-toggle block w-full text-center md:text-left text-2xl md:text-[0.9125rem] px-2 lg:px-3 py-5 md:py-3 font-mono font-medium uppercase hover:text-blue-500"
+          aria-expanded="false" aria-haspopup="true">
+          Resources<svg class="dropdown-chevron inline-block w-3 h-3 ml-1 align-middle -translate-y-0.25 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+        </button>
+        <ul class="dropdown-menu hidden md:absolute md:left-0 md:mt-0 md:w-44 md:bg-white md:shadow md:rounded-xl md:py-2 md:z-[60] overflow-hidden transition-[max-height] duration-300 ease-in-out max-h-0 md:max-h-none md:bottom-auto bottom-0">
+          
+          <li>
+            <a class="block px-4 py-2 text-xl md:text-[0.825rem] font-medium uppercase font-mono text-center md:text-left hover:bg-blue-100 hover:text-gray-700"
+              href="/resources/cheatsheets/">Cheatsheets</a>
+          </li>
+          
+          <li>
+            <a class="block px-4 py-2 text-xl md:text-[0.825rem] font-medium uppercase font-mono text-center md:text-left hover:bg-blue-100 hover:text-gray-700"
+              href="/resources/videos/">Videos</a>
+          </li>
+          
+        </ul>
+      </li>
+      
+      
+      <li id="" class="">
+        <a class="block text-center md:text-left text-2xl md:text-[0.9125rem] px-2 lg:px-3 py-5 md:py-3 font-mono font-medium uppercase hover:text-blue-500"
+          href="/blog/">Blog</a>
+      </li>
+      
+      
+      <li id="about" class="relative group w-full md:w-auto">
+        <button class="dropdown-toggle block w-full text-center md:text-left text-2xl md:text-[0.9125rem] px-2 lg:px-3 py-5 md:py-3 font-mono font-medium uppercase hover:text-blue-500"
+          aria-expanded="false" aria-haspopup="true">
+          About<svg class="dropdown-chevron inline-block w-3 h-3 ml-1 align-middle -translate-y-0.25 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+        </button>
+        <ul class="dropdown-menu hidden md:absolute md:left-0 md:mt-0 md:w-44 md:bg-white md:shadow md:rounded-xl md:py-2 md:z-[60] overflow-hidden transition-[max-height] duration-300 ease-in-out max-h-0 md:max-h-none md:bottom-auto bottom-0">
+          
+          <li>
+            <a class="block px-4 py-2 text-xl md:text-[0.825rem] font-medium uppercase font-mono text-center md:text-left hover:bg-blue-100 hover:text-gray-700"
+              href="/about/posit/">About Posit</a>
+          </li>
+          
+          <li>
+            <a class="block px-4 py-2 text-xl md:text-[0.825rem] font-medium uppercase font-mono text-center md:text-left hover:bg-blue-100 hover:text-gray-700"
+              href="/about/ai/">Our AI Work</a>
+          </li>
+          
+          <li>
+            <a class="block px-4 py-2 text-xl md:text-[0.825rem] font-medium uppercase font-mono text-center md:text-left hover:bg-blue-100 hover:text-gray-700"
+              href="/about/python/">Our Python Work</a>
+          </li>
+          
+          <li>
+            <a class="block px-4 py-2 text-xl md:text-[0.825rem] font-medium uppercase font-mono text-center md:text-left hover:bg-blue-100 hover:text-gray-700"
+              href="/about/r/">Our R Work</a>
+          </li>
+          
+          <li>
+            <a class="block px-4 py-2 text-xl md:text-[0.825rem] font-medium uppercase font-mono text-center md:text-left hover:bg-blue-100 hover:text-gray-700"
+              href="/about/community-support/">Community Support</a>
+          </li>
+          
+        </ul>
+      </li>
+      
+      
+      <li class="hidden md:block">
+        <a href="https://github.com/posit-dev/open-source-website" target="_blank" rel="noopener"
+          class="block text-center md:text-left text-2xl md:text-[0.9125rem] px-2 lg:px-3 py-5 md:py-3 font-medium hover:text-blue-500"
+          aria-label="GitHub repository">
+          <i class="w-6 h-6 inline-block align-text-bottom">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+   <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5"></path>
+</svg>
+
+          </i>
+        </a>
+      </li>
+      <li class="hidden md:block">
+        <button id="search-toggle" type="button"
+          class="block text-center md:text-left text-2xl md:text-[0.9125rem] px-2 md:pl-3 md:pr-0 py-5 md:py-3 font-medium hover:text-blue-500 cursor-pointer"
+          aria-label="Search">
+          <i class="w-6 h-6 inline-block align-text-bottom">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+    <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
+    <path d="M21 21l-6 -6" />
+</svg>
+
+          </i>
+        </button>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+
+  </div>
+  
+  <div class="flex-none mx-1"></div>
+  
+</div>
+
+  </header>
+  <main class="flex flex-auto justify-center">
+    <div class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+        <span class="sr-only" data-pagefind-filter="type">Resources</span>
+      
+      
+<article class="flex flex-col w-full relative">
+  
+  
+  
+  
+  
+  
+  <img src="/resources/cheatsheets/positron/page-1_hu_a78ab07a0cada953.png" alt="Positron" class="hidden" data-pagefind-meta="image[src]">
+  
+  
+  <div class="w-full lg:max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+    
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+
+
+
+
+
+
+  
+    
+      
+    
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+    
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+    
+  
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="item-cee6a77c33ea22421b5c15d3f13da9b3" class="@container flex flex-col relative rounded-xl overflow-hidden  ">
+
+      
+
+
+
+  
+  
+  
+  
+
+  <div class="flex flex-col gap-y-4 py-6">
+    
+    
+    
+    <div class="flex flex-row flex-wrap gap-x-4 gap-y-2 items-center">
+      
+      <div class="flex flex-wrap gap-1">
+        
+        <a href="/software/positron/" class="px-2 py-0.5 rounded-md bg-blue-100 text-blue-700 text-xs font-semibold uppercase tracking-wide hover:bg-blue-200">Positron</a>
+        
+      </div>
+      
+      
+    </div>
+    
+
+    <h1 class="text-2xl @grande:text-3xl @venti:text-4xl font-medium text-gray-500">
+      Positron
+    </h1>
+
+    
+      <div class="text-sm @grande:text-base @venti:text-lg text-gray-600">
+        <p class="line-clamp-3 [&_a]:underline" id="video-description" data-hero-desc>Quick reference guide for positron</p>
+        <button class="text-blue-600 hover:underline mt-1 hidden" data-hero-toggle>Read more...</button>
+      </div>
+    
+
+    
+    
+
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+
+  </div>
+  <script>
+  (function() {
+    var container = document.getElementById('item-cee6a77c33ea22421b5c15d3f13da9b3');
+    if (!container) return;
+    var desc = container.querySelector('[data-hero-desc]');
+    var btn = container.querySelector('[data-hero-toggle]');
+    if (!desc || !btn) return;
+    document.addEventListener('DOMContentLoaded', function() {
+      if (desc.scrollHeight > desc.clientHeight) btn.classList.remove('hidden');
+    });
+    btn.addEventListener('click', function() {
+      if (desc.classList.contains('line-clamp-3')) {
+        desc.classList.remove('line-clamp-3');
+        btn.textContent = 'Read less.';
+      } else {
+        desc.classList.add('line-clamp-3');
+        btn.textContent = 'Read more...';
+      }
+    });
+  })();
+  </script>
+
+  
+
+</div>
+
+
+
+      <div class="mt-6">
+        <div class="flex gap-4 overflow-x-auto pb-2">
+          
+          
+          
+          
+          <div class="shrink-0">
+            <img src="/resources/cheatsheets/positron/page-1.png" alt="Page 1 preview"
+              width="600" height="463"
+              class="h-48 w-auto rounded-lg border border-gray-100 bg-gray-50 cursor-pointer"
+              loading="lazy"
+              data-gallery-group="cheatsheet-preview"
+              data-gallery-src="/resources/cheatsheets/positron/page-1.png"
+              data-gallery-pdf="positron.pdf"
+              data-gallery-pdf-page="1"
+              data-gallery-caption="Page 1"
+              role="button"
+              tabindex="0" />
+          </div>
+          
+          
+          
+          
+          
+          <div class="shrink-0">
+            <img src="/resources/cheatsheets/positron/page-2.png" alt="Page 2 preview"
+              width="600" height="463"
+              class="h-48 w-auto rounded-lg border border-gray-100 bg-gray-50 cursor-pointer"
+              loading="lazy"
+              data-gallery-group="cheatsheet-preview"
+              data-gallery-src="/resources/cheatsheets/positron/page-2.png"
+              data-gallery-pdf="positron.pdf"
+              data-gallery-pdf-page="2"
+              data-gallery-caption="Page 2"
+              role="button"
+              tabindex="0" />
+          </div>
+          
+          
+        </div>
+      </div>
+      <div class="flex flex-wrap gap-2 mt-6">
+        
+        
+        <a href="positron.pdf" target="_blank"
+          class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-green-600 hover:bg-green-700 text-white font-medium transition-colors">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+          </svg>
+          Download PDF
+        </a>
+        
+
+        
+      </div>
+    
+  </div>
+  
+
+  <div class="w-full lg:max-w-5xl mx-auto px-4 sm:px-6 lg:px-8"><div class="flex flex-col md:flex-row gap-8 lg:gap-16 mt-8"><div class="flex-1">
+
+
+        
+        
+        
+
+
+
+      </div><aside class="hidden md:block md:w-48 lg:w-64 shrink-0">
+        <div class="sticky top-8 max-h-[calc(100vh-4rem)] overflow-y-auto"></div>
+      </aside>
+    </div>
+  </div>
+  
+  
+  <div class="mt-12 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+    <div id="featured-software" class="mb-6">
+      <h2 id="featured-software" class="text-2xl font-medium text-gray-800 mb-4">Featured software<a class="heading-anchor" href="#featured-software" aria-label="Link to this section: Featured software">#</a>
+</h2>
+
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      
+      
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+  
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="item-6543976c632b7fc7305dbf2c019be71e" class="@container h-full">
+  <a href="/software/positron/" title="Positron"
+     class="card-link flex flex-col @venti:flex-row rounded-xl  h-full">
+
+      
+
+
+
+      
+      
+        
+        <span class="card-badge absolute top-2 @max-venti:right-2 @venti:left-2 z-10">
+
+          <span class="icon-[boxicons--hexagon-filled]"></span>
+          <span class="font-semibold uppercase tracking-wide hidden @short:inline">software</span>
+
+        </span>
+      
+      
+
+    
+    
+    <div class="w-full @venti:w-1/2 @venti:self-center aspect-[40/21] flex-shrink-0 flex items-center justify-center overflow-hidden rounded-xl" style="background-color: color-mix(in srgb, #3C74B3 25%, white 75%);">
+      
+        
+
+
+
+
+
+
+
+
+
+  
+  
+    
+    
+
+    
+
+    
+      
+      
+
+      
+      
+      
+
+      
+      
+      
+      
+
+      <picture class="hidden @max-tall:block w-full h-full">
+        <source
+          type="image/webp"
+          srcset="/software/positron/positron_hu_1e0f584b7faffe95.webp 1x,
+                  /software/positron/positron_hu_95ee5e35f01d0643.webp 2x" />
+        <img
+          src="/software/positron/positron_hu_d77f0b622bfeb812.png"
+          srcset="/software/positron/positron_hu_d77f0b622bfeb812.png 1x,
+                  /software/positron/positron_hu_1fdbc782686f1009.png 2x"
+          alt="Positron"
+          class="mx-auto h-full object-contain px-[20%] py-[5%]"
+          loading="lazy" />
+      </picture>
+    
+      
+      
+
+      
+      
+      
+
+      
+      
+      
+      
+
+      <picture class="hidden @tall:@max-grande:block w-full h-full">
+        <source
+          type="image/webp"
+          srcset="/software/positron/positron_hu_95ee5e35f01d0643.webp 1x,
+                  /software/positron/positron_hu_642198bc7372e501.webp 2x" />
+        <img
+          src="/software/positron/positron_hu_1fdbc782686f1009.png"
+          srcset="/software/positron/positron_hu_1fdbc782686f1009.png 1x,
+                  /software/positron/positron_hu_91c5b6c8bb512422.png 2x"
+          alt="Positron"
+          class="mx-auto h-full object-contain px-[20%] py-[5%]"
+          loading="lazy" />
+      </picture>
+    
+      
+      
+
+      
+      
+      
+        
+      
+
+      
+      
+      
+      
+
+      <picture class="hidden @grande:block w-full h-full">
+        <source
+          type="image/webp"
+          srcset="/software/positron/positron_hu_642198bc7372e501.webp 1x,
+                  /software/positron/positron_hu_904b19cab9f7cb94.webp 2x" />
+        <img
+          src="/software/positron/positron_hu_91c5b6c8bb512422.png"
+          srcset="/software/positron/positron_hu_91c5b6c8bb512422.png 1x,
+                  /software/positron/positron_hu_ec758ca84e621e49.png 2x"
+          alt="Positron"
+          class="mx-auto h-full object-contain px-[20%] py-[5%]"
+          loading="lazy" />
+      </picture>
+    
+  
+  
+
+
+      
+    </div>
+
+    
+    <div class="hidden gap-y-2 @nip:flex @venti:w-1/2 flex-auto flex-col p-3 @venti:pl-5 text-gray-700 mt-2">
+
+      
+      
+
+      
+      
+      <div class="hidden @short:flex flex-wrap gap-x-2 items-center text-xs font-medium text-gray-500">
+        
+        
+        
+        
+        
+          <div class="flex gap-1 items-center">
+            <span class="icon-[boxicons--star-filled]"></span>
+            <span>4.1k</span>
+          </div>
+        
+      </div>
+      
+
+      
+      <h3 class="m-0! mt-3 font-semibold text-sm @grande:text-lg @venti:text-xl @trenta:text-2xl line-clamp-2 text-sm @tall:text-base @grande:text-lg @venti:text-xl @trenta:text-2xl text-gray-600">Positron</h3>
+      
+
+      
+        <p class="m-0! text-xs @short:text-sm @grande:text-md @venti:text-md @trenta:text-lg line-clamp-2 short@line-clamp-3 @tall:line-clamp-3 font-medium text-gray-600">Positron, a next-generation data science IDE</p>
+      
+
+      
+
+      <div class="grow"></div>
+      
+        
+          <div class="hidden @grande:flex flex-wrap gap-x-1 gap-y-4 py-2 overflow-hidden h-10 items-end">
+            
+              <span class="pill">
+                Best Practices
+              </span>
+            
+              <span class="pill">
+                Interactive Apps
+              </span>
+            
+          </div>
+        
+      
+    </div>
+  </a>
+</div>
+
+
+      
+    </div>
+  </div>
+  
+
+</article>
+
+
+    </div>
+  </main>
+  <footer class="flex flex-none justify-center">
+    <footer class="w-full bg-white text-gray-700 mt-12 border-t border-blue-200">
+  <div class="flex flex-col w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-18 pb-10">
+    
+    <div class="grid grid-cols-1 md:grid-cols-7 gap-8 mb-14">
+      
+      <div class="col-span-1 md:col-span-3 md:pr-4 xl:pr-8 2xl:pr-12">
+        <a href="/" class="inline-block mb-4">
+          <span class="">
+            
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+    
+    
+    
+    
+    
+    
+    
+      
+      
+      
+      
+      
+      
+    
+    
+    
+    
+    <picture class="block w-full h-full">
+      <source
+        type="image/webp"
+        srcset="/posit-open-source-logo-light_hu_50cec5c5bc71f0ad.webp 1x,
+                /posit-open-source-logo-light_hu_c6c053415d8b5b4b.webp 2x,
+                /posit-open-source-logo-light_hu_6597dc75bc6328b2.webp 3x" />
+      <img
+        src="/posit-open-source-logo-light_hu_cb6da56f7d1f6b50.png"
+        srcset="/posit-open-source-logo-light_hu_cb6da56f7d1f6b50.png 1x,
+                /posit-open-source-logo-light_hu_e9f8e583a969442b.png 2x,
+                /posit-open-source-logo-light_hu_eb9904f999055821.png 3x"
+        alt="Posit Open Source"
+        class="h-6.5"
+        loading="lazy" />
+    </picture>
+  
+
+
+          </span>
+          <span class="hidden">
+            
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+    
+    
+    
+    
+    
+    
+    
+      
+      
+      
+      
+      
+      
+    
+    
+    
+    
+    <picture class="block w-full h-full">
+      <source
+        type="image/webp"
+        srcset="/posit-open-source-logo-dark_hu_95874f04353d47d0.webp 1x,
+                /posit-open-source-logo-dark_hu_c8593b8200d28c97.webp 2x,
+                /posit-open-source-logo-dark_hu_4cde321145fb9db1.webp 3x" />
+      <img
+        src="/posit-open-source-logo-dark_hu_921746bdc15456d9.png"
+        srcset="/posit-open-source-logo-dark_hu_921746bdc15456d9.png 1x,
+                /posit-open-source-logo-dark_hu_11400af34c931d87.png 2x,
+                /posit-open-source-logo-dark_hu_27bc459f2da0f22.png 3x"
+        alt="Posit Open Source"
+        class="h-6.5"
+        loading="lazy" />
+    </picture>
+  
+
+
+          </span>
+        </a>
+        <p class="text-sm text-gray-600">
+          Open source software and tools for data science.
+        </p>
+        <p class="text-sm mt-3 text-gray-600">
+          Visit <a class="underline" href="https://posit.co/products">posit.co</a> to learn how our enterprise products allow you to use open source tools securely, more collaboratively, and at scale.
+        </p>
+        
+      </div>
+
+      
+      <div class="col-span-1 md:col-span-2 grid grid-cols-2 gap-8">
+        
+        <div>
+          <h3 class="text-gray-900 font-semibold mb-4">Navigate</h3>
+          <ul class="space-y-2 text-sm">
+            
+            <li>
+              <a href="/software/" class="font-medium hover:text-blue-500 transition-colors">
+                Software
+              </a>
+            </li>
+            
+            <li>
+              <a href="/people/" class="font-medium hover:text-blue-500 transition-colors">
+                People
+              </a>
+            </li>
+            
+            <li>
+              <a href="/events/" class="font-medium hover:text-blue-500 transition-colors">
+                Events
+              </a>
+            </li>
+            
+            <li>
+              <a href="/resources/" class="font-medium hover:text-blue-500 transition-colors">
+                Resources
+              </a>
+            </li>
+            
+            <li>
+              <a href="/blog/" class="font-medium hover:text-blue-500 transition-colors">
+                Blog
+              </a>
+            </li>
+            
+            <li>
+              <a href="/about/" class="font-medium hover:text-blue-500 transition-colors">
+                About
+              </a>
+            </li>
+            
+          </ul>
+        </div>
+
+        
+        <div>
+          <h3 class="text-gray-900 font-semibold mb-4">Learn</h3>
+          <ul class="space-y-2 text-sm">
+            <li>
+              <a href="https://posit.co" target="_blank" rel="noopener" class="hover:text-gray-900 transition-colors">
+                Posit.co
+              </a>
+            </li>
+            <li>
+              <a href="https://posit.co/about/" target="_blank" rel="noopener" class="hover:text-gray-900 transition-colors">
+                About Posit
+              </a>
+            </li>
+            <li>
+              <a href="https://posit.co/support/" target="_blank" rel="noopener" class="hover:text-gray-900 transition-colors">
+                Support
+              </a>
+            </li>
+            <li>
+              <a href="https://github.com/posit-dev" target="_blank" rel="noopener" class="hover:text-gray-900 transition-colors">
+                GitHub
+              </a>
+            </li>
+            <li>
+              <a href="/subscribe/" class="hover:text-gray-900 transition-colors">
+                Subscribe
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      
+      <div class="col-span-1 md:col-span-2">
+        <h3 class="text-gray-900 font-semibold mb-4">Connect</h3>
+        <div class="flex flex-row flex-wrap gap-4">
+          <a href="https://github.com/posit-dev" target="_blank" rel="noopener" title="GitHub" class="text-gray-600 hover:text-gray-900 transition-colors">
+            <i class="h-6 w-6 flex-none"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+   <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5"></path>
+</svg>
+</i>
+            <span class="sr-only">GitHub</span>
+          </a>
+          <a href="https://fosstodon.org/@posit" target="_blank" rel="noopener me" title="Mastodon" class="text-gray-600 hover:text-gray-900 transition-colors">
+            <i class="h-6 w-6 flex-none"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+  <path d="M18.648 15.254c-1.816 1.763 -6.648 1.626 -6.648 1.626a18.262 18.262 0 0 1 -3.288 -.256c1.127 1.985 4.12 2.81 8.982 2.475c-1.945 2.013 -13.598 5.257 -13.668 -7.636l-.026 -1.154c0 -3.036 .023 -4.115 1.352 -5.633c1.671 -1.91 6.648 -1.666 6.648 -1.666s4.977 -.243 6.648 1.665c1.329 1.518 1.352 2.597 1.352 5.633s-.456 4.074 -1.352 4.946z"></path>
+  <path d="M12 11.204v-2.926c0 -1.258 -.895 -2.278 -2 -2.278s-2 1.02 -2 2.278v4.722m4 -4.722c0 -1.258 .895 -2.278 2 -2.278s2 1.02 2 2.278v4.722"></path>
+</svg>
+</i>
+            <span class="sr-only">Mastodon</span>
+          </a>
+          <a href="https://bsky.app/profile/posit.bsky.social" target="_blank" rel="noopener" title="Bluesky" class="text-gray-600 hover:text-gray-900 transition-colors">
+            <i class="h-6 w-6 flex-none"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+    <path
+        d="M6.335 5.144c-1.654 -1.199 -4.335 -2.127 -4.335 .826c0 .59 .35 4.953 .556 5.661c.713 2.463 3.13 2.75 5.444 2.369c-4.045 .665 -4.889 3.208 -2.667 5.41c1.03 1.018 1.913 1.59 2.667 1.59c2 0 3.134 -2.769 3.5 -3.5c.333 -.667 .5 -1.167 .5 -1.5c0 .333 .167 .833 .5 1.5c.366 .731 1.5 3.5 3.5 3.5c.754 0 1.637 -.571 2.667 -1.59c2.222 -2.203 1.378 -4.746 -2.667 -5.41c2.314 .38 4.73 .094 5.444 -2.369c.206 -.708 .556 -5.072 .556 -5.661c0 -2.953 -2.68 -2.025 -4.335 -.826c-2.293 1.662 -4.76 5.048 -5.665 6.856c-.905 -1.808 -3.372 -5.194 -5.665 -6.856z" />
+</svg>
+</i>
+            <span class="sr-only">Bluesky</span>
+          </a>
+          <a href="https://www.linkedin.com/showcase/posit-open-source/" target="_blank" rel="noopener" title="LinkedIn" class="text-gray-600 hover:text-gray-900 transition-colors">
+            <i class="h-6 w-6 flex-none"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+   <path d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z"></path>
+   <path d="M8 11l0 5"></path>
+   <path d="M8 8l0 .01"></path>
+   <path d="M12 16l0 -5"></path>
+   <path d="M16 16v-3a2 2 0 0 0 -4 0"></path>
+</svg>
+</i>
+            <span class="sr-only">LinkedIn</span>
+          </a>
+          <a href="https://youtube.com/@PositPBC" target="_blank" rel="noopener" title="YouTube" class="text-gray-600 hover:text-gray-900 transition-colors">
+            <i class="h-6 w-6 flex-none"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" class="icon icon-tabler icon-tabler-brand-youtube" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+   <path d="M2 8a4 4 0 0 1 4 -4h12a4 4 0 0 1 4 4v8a4 4 0 0 1 -4 4h-12a4 4 0 0 1 -4 -4v-8z"></path>
+   <path d="M10 9l5 3l-5 3z"></path>
+</svg>
+</i>
+            <span class="sr-only">YouTube</span>
+          </a>
+          <a href="/subscribe/" title="RSS Feeds" class="text-gray-600 hover:text-gray-900 transition-colors">
+            <i class="h-6 w-6 flex-none"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <circle cx="5" cy="19" r="1" />
+  <path d="M4 4a16 16 0 0 1 16 16" />
+  <path d="M4 11a9 9 0 0 1 9 9" />
+</svg>
+</i>
+            <span class="sr-only">RSS Feeds</span>
+          </a>
+          <a href="https://plausible.io/opensource.posit.co" target="_blank" rel="noopener" title="Plausible" class="text-gray-600 hover:text-gray-900 transition-colors">
+            <i class="h-6 w-6 flex-none"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="-2 -2.67 52 69.34" fill="currentColor" stroke="none">
+   <path d="M45.2456059,22.6027536c-1.0911024,10.4557623-10.2327486,18.2272825-20.7452872,18.2272807h-4.047804v9.570007c0,5.3019285-4.2980623,9.5999908-9.5999908,9.5999908H3.3599854c-1.8556687,0-3.3599854-1.5043167-3.3599854-3.3599854v-19.7025146l5.0380685-7.0686343c.9118097-1.2793096,2.587965-1.7566996,4.0369945-1.1497867l2.8657142,1.2002785c1.4444817.6050081,3.1153774.12945,4.0247968-1.1455083l6.7172007-9.417163c.9071158-1.2717288,2.5743943-1.7450816,4.0144283-1.1397262l5.5198678,2.3204187c1.4430268.6066135,3.1137697.1319561,4.0223175-1.1427389l6.4594145-9.0625757c2.0248091,3.5597961,3.0145069,7.7887694,2.5468032,12.2706573Z"/>
+   <path d="M3.2920959,28.8726296c.82329-1.1551271,2.0209115-2.0434967,3.4138697-2.3114381,1.0861554-.2089265,2.156905-.0992829,3.1472499.3155174l2.8649902,1.1999512c.1651001.0691528.3388672.104187.5164795.104187.4365845,0,.8488159-.2124634,1.1026611-.5683594l6.5942097-9.2447929c.8231505-1.154021,2.0204067-2.0410099,3.4124878-2.3083136,1.0821376-.2077892,2.1463585-.0989034,3.1282512.3138487l5.5198364,2.3204346c.1665649.0700684.3417969.1055298.5206909.1055298.4351807,0,.8456421-.2113647,1.0979614-.5653687l6.9192505-9.7077637C37.8272145,3.3644409,31.7802174,0,24.9450124,0H3.3599904C1.5043217,0,.000005,1.5043167,.000005,3.3599854v30.1316528l3.2920909-4.6190085Z"/>
+</svg>
+</i>
+            <span class="sr-only">Plausible</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-gray-400">
+      <div class="flex items-center gap-2">
+        <i class="h-4 w-4 flex-none"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+   <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"></path>
+   <path d="M14 9.75a3.016 3.016 0 0 0 -4.163 .173a2.993 2.993 0 0 0 0 4.154a3.016 3.016 0 0 0 4.163 .173"></path>
+</svg>
+</i>
+        <span>2026 Posit Software, PBC. All rights reserved.</span>
+      </div>
+      <div class="flex flex-row gap-4">
+        <a href="https://posit.co/about/privacy-policy/" target="_blank" rel="noopener" class="hover:text-gray-900 transition-colors">
+          Privacy
+        </a>
+        <a href="https://posit.co/about/code-of-conduct/" target="_blank" rel="noopener" class="hover:text-gray-900 transition-colors">
+          Code of Conduct
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+  </footer>
+  <script src="/main.min.6bc1930b2ee28ac0867984d27bc1dcbafc6d4540fd9a8a87ae92273dfd2cd7d7.js" defer></script><script src="/js/external-links.min.1192ac971e28845380135d743f129381592e536207405163d1f116e089287e50.js" defer></script><script src="/js/ease-scroll.min.d1bb16497a20ec206abdda8d246080a7cb2a61b7ffe90ebb41b3587013618cb3.js"></script><script src="/gallery-lightbox.min.e0fdcd6cc0946dd810d776ca0e719cff2a50a6d8d00b86ab2c3157e6f5a3956c.js" defer></script>
+
+<div id="search-modal" class="hidden fixed inset-0 z-[100] overflow-y-auto" aria-labelledby="search-modal-title" role="dialog" aria-modal="true" data-pagefind-ignore>
+  
+  <div class="fixed inset-0 bg-blue-100/80 transition-opacity" id="search-backdrop"></div>
+
+  
+  <div class="flex min-h-full items-start justify-center p-4 sm:p-6 md:p-20">
+    <div class="relative w-full max-w-4xl transform overflow-hidden rounded-lg bg-white shadow-2xl transition-all">
+      
+      <div class="relative">
+        <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-6">
+          <i class="h-5 w-5 text-gray-400">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+    <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
+    <path d="M21 21l-6 -6" />
+</svg>
+
+          </i>
+        </div>
+        <input
+          type="text"
+          id="search-input"
+          class="block w-full border-0 bg-transparent py-4 pl-14 pr-6 text-gray-500 placeholder:text-gray-400 focus:ring-0 text-base sm:text-lg outline-none"
+          placeholder="Search..."
+          autocomplete="off"
+          spellcheck="false"
+        >
+      </div>
+
+      
+      <div class="sm:hidden w-full border-t border-blue-200 p-6">
+        <button id="mobile-filter-toggle" class="flex items-center justify-between w-full text-sm text-gray-500">
+          <span class="font-medium">Filters</span>
+          <svg class="h-5 w-5 transition-transform" id="mobile-filter-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+          </svg>
+        </button>
+      </div>
+
+      
+      <div class="flex border-t border-blue-200">
+
+        
+        <aside id="search-filters" aria-label="Search filters" role="group" class="flex-none w-full sm:w-56 border-r border-blue-200 bg-[color-mix(in_srgb,theme(colors.blue.50)_50%,theme(colors.blue.100)_50%)] p-6 overflow-y-auto hidden sm:block">
+          <h3 id="filter-heading" class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3">Filter by Type</h3>
+
+          
+          <div class="flex gap-2 mb-3 pb-3 border-b border-blue-200">
+            <button id="select-all-filters" class="text-xs text-blue-500 hover:underline" aria-label="Select all filter types">
+              Select All
+            </button>
+            <span class="text-xs text-gray-300" aria-hidden="true">|</span>
+            <button id="clear-all-filters" class="text-xs text-gray-500 hover:underline" aria-label="Clear all filter types">
+              Clear All
+            </button>
+          </div>
+
+          
+          <div role="group" aria-labelledby="filter-heading" class="space-y-2">
+            
+            <label class="flex items-center justify-between cursor-pointer group">
+              <div class="flex items-center">
+                <input
+                  type="checkbox"
+                  id="filter-software"
+                  value="Software"
+                  checked
+                  aria-label="Show Software results"
+                  class="h-4 w-4 rounded border-blue-200 text-blue-500 focus:ring-blue-500 focus:ring-offset-0 accent-blue-500"
+                >
+                <span class="ml-2 text-sm text-gray-500 group-hover:text-gray-600">Software</span>
+              </div>
+              <span id="count-software" class="text-xs text-gray-500" aria-live="polite">(0)</span>
+            </label>
+
+            
+            <label class="flex items-center justify-between cursor-pointer group">
+              <div class="flex items-center">
+                <input
+                  type="checkbox"
+                  id="filter-people"
+                  value="People"
+                  checked
+                  aria-label="Show People results"
+                  class="h-4 w-4 rounded border-blue-200 text-blue-500 focus:ring-blue-500 focus:ring-offset-0 accent-blue-500"
+                >
+                <span class="ml-2 text-sm text-gray-500 group-hover:text-gray-600">People</span>
+              </div>
+              <span id="count-people" class="text-xs text-gray-500" aria-live="polite">(0)</span>
+            </label>
+
+            
+            <label class="flex items-center justify-between cursor-pointer group">
+              <div class="flex items-center">
+                <input
+                  type="checkbox"
+                  id="filter-events"
+                  value="Events"
+                  checked
+                  aria-label="Show Events results"
+                  class="h-4 w-4 rounded border-blue-200 text-blue-500 focus:ring-blue-500 focus:ring-offset-0 accent-blue-500"
+                >
+                <span class="ml-2 text-sm text-gray-500 group-hover:text-gray-600">Events</span>
+              </div>
+              <span id="count-events" class="text-xs text-gray-500" aria-live="polite">(0)</span>
+            </label>
+
+            
+            <label class="flex items-center justify-between cursor-pointer group">
+              <div class="flex items-center">
+                <input
+                  type="checkbox"
+                  id="filter-resources"
+                  value="Resources"
+                  checked
+                  aria-label="Show Resources results"
+                  class="h-4 w-4 rounded border-blue-200 text-blue-500 focus:ring-blue-500 focus:ring-offset-0 accent-blue-500"
+                >
+                <span class="ml-2 text-sm text-gray-500 group-hover:text-gray-600">Resources</span>
+              </div>
+              <span id="count-resources" class="text-xs text-gray-500" aria-live="polite">(0)</span>
+            </label>
+
+            
+            <label class="flex items-center justify-between cursor-pointer group">
+              <div class="flex items-center">
+                <input
+                  type="checkbox"
+                  id="filter-blog"
+                  value="Blog"
+                  checked
+                  aria-label="Show Blog results"
+                  class="h-4 w-4 rounded border-blue-200 text-blue-500 focus:ring-blue-500 focus:ring-offset-0 accent-blue-500"
+                >
+                <span class="ml-2 text-sm text-gray-500 group-hover:text-gray-600">Blog</span>
+              </div>
+              <span id="count-blog" class="text-xs text-gray-500" aria-live="polite">(0)</span>
+            </label>
+
+            
+            <label class="flex items-center justify-between cursor-pointer group">
+              <div class="flex items-center">
+                <input
+                  type="checkbox"
+                  id="filter-other"
+                  value="Other"
+                  checked
+                  aria-label="Show Other results"
+                  class="h-4 w-4 rounded border-blue-200 text-blue-500 focus:ring-blue-500 focus:ring-offset-0 accent-blue-500"
+                >
+                <span class="ml-2 text-sm text-gray-500 group-hover:text-gray-600">Other</span>
+              </div>
+              <span id="count-other" class="text-xs text-gray-500" aria-live="polite">(0)</span>
+            </label>
+          </div>
+        </aside>
+
+        
+        <div class="flex-1 min-w-0">
+          
+          <div id="search-results-header" class="hidden px-6 py-2 border-b border-blue-200">
+            <p class="text-xs text-gray-500">
+              <span id="results-count-text"></span>
+            </p>
+          </div>
+
+          <div id="search-results" class="max-h-[65vh] scroll-py-2 overflow-y-auto" role="region" aria-live="polite" aria-label="Search results">
+            
+            <div id="search-loading" class="hidden py-8 text-center text-sm text-gray-500">
+              Searching...
+            </div>
+
+            
+            <div id="search-empty" class="py-8 text-center text-sm text-gray-500">
+              Type to search
+            </div>
+
+            
+            <div id="search-no-results" class="hidden py-8 text-center text-sm text-gray-500">
+              No results found
+            </div>
+
+            
+            <ul id="search-results-list" class="divide-y divide-blue-200"></ul>
+          </div>
+        </div>
+      </div>
+
+      
+      <div class="flex items-center justify-between border-t border-blue-200 px-6 py-4 text-xs text-gray-500">
+        <div class="flex items-center gap-3">
+          <kbd class="rounded border border-blue-200 bg-blue-100 px-2 py-1 font-mono">↑↓</kbd>
+          <span>Navigate</span>
+        </div>
+        <div class="flex items-center gap-3">
+          <kbd class="rounded border border-blue-200 bg-blue-100 px-2 py-1 font-mono">↵</kbd>
+          <span>Select</span>
+        </div>
+        <div class="flex items-center gap-3">
+          <kbd class="rounded border border-blue-200 bg-blue-100 px-2 py-1 font-mono">ESC</kbd>
+          <span>Close</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="/js/search.min.72be28de8beaa8914f38437575ac1094e073267cc8b1d21fc0a15e2ab8ded1d8.js" type="module" defer></script><script src="/toc-scroll.min.ca955577e8cd78ec0cc919646ceda4939076016c8c0ff3fbcc79b6784c94af96.js" defer></script><script>if(document.querySelector('[data-item-container]')){var s=document.createElement('script');s.src='\/search-filter-sort.min.749dad0b7e208fde340f091bfeb98a7dafced9f4cd5c13b372f80d4ad780491a.js';s.defer=true;document.body.appendChild(s);}</script>
+
+
+
+
+</body>
+</html>

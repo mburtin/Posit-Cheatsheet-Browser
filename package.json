@@ -1,0 +1,220 @@
+{
+  "name": "posit-cheatsheets-browser",
+  "displayName": "Posit Cheatsheets Browser",
+  "description": "Browse the official Posit cheatsheets from a sidebar and read them in Positron's PDF viewer.",
+  "version": "1.0.1",
+  "publisher": "mburtin",
+  "license": "MIT",
+  "icon": "media/icon.png",
+  "galleryBanner": {
+    "color": "#1C3C6B",
+    "theme": "dark"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mburtin/Posit-Cheatsheet.git"
+  },
+  "engines": {
+    "vscode": "^1.90.0"
+  },
+  "categories": [
+    "Education",
+    "Other"
+  ],
+  "keywords": [
+    "positron",
+    "posit",
+    "cheatsheet",
+    "r",
+    "python"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "positCheatsheets",
+          "title": "Posit Cheatsheets Browser",
+          "icon": "media/cheatsheet.svg"
+        }
+      ]
+    },
+    "views": {
+      "positCheatsheets": [
+        {
+          "id": "positCheatsheets.favorites",
+          "name": "Favorites",
+          "initialSize": 1
+        },
+        {
+          "id": "positCheatsheets.list",
+          "name": "Cheatsheets",
+          "initialSize": 3
+        }
+      ]
+    },
+    "viewsWelcome": [
+      {
+        "view": "positCheatsheets.favorites",
+        "contents": "Pin the cheatsheets you use most to keep them here: hover a cheatsheet and click its pin icon, or right-click it and choose Pin to Favorites.",
+        "when": "!positCheatsheets.hasFavorites"
+      },
+      {
+        "view": "positCheatsheets.list",
+        "contents": "Check your internet connection, then try again.\n[Retry](command:positCheatsheets.refresh)",
+        "when": "positCheatsheets.state == error"
+      }
+    ],
+    "commands": [
+      {
+        "command": "positCheatsheets.refresh",
+        "title": "Refresh",
+        "category": "Posit Cheatsheets Browser",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "positCheatsheets.quickOpen",
+        "title": "Open Cheatsheet...",
+        "category": "Posit Cheatsheets Browser",
+        "icon": "$(search)"
+      },
+      {
+        "command": "positCheatsheets.open",
+        "title": "Open",
+        "category": "Posit Cheatsheets Browser"
+      },
+      {
+        "command": "positCheatsheets.openInBrowser",
+        "title": "Open on Website",
+        "category": "Posit Cheatsheets Browser",
+        "icon": "$(link-external)"
+      },
+      {
+        "command": "positCheatsheets.pin",
+        "title": "Pin to Favorites",
+        "category": "Posit Cheatsheets Browser",
+        "icon": "$(pin)"
+      },
+      {
+        "command": "positCheatsheets.unpin",
+        "title": "Unpin from Favorites",
+        "category": "Posit Cheatsheets Browser",
+        "icon": "$(pinned)"
+      },
+      {
+        "command": "positCheatsheets.redownload",
+        "title": "Re-download PDF",
+        "category": "Posit Cheatsheets Browser"
+      },
+      {
+        "command": "positCheatsheets.clearCache",
+        "title": "Clear Downloaded PDFs",
+        "category": "Posit Cheatsheets Browser"
+      }
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "positCheatsheets.quickOpen",
+          "when": "view == positCheatsheets.list",
+          "group": "navigation@1"
+        },
+        {
+          "command": "positCheatsheets.refresh",
+          "when": "view == positCheatsheets.list",
+          "group": "navigation@2"
+        },
+        {
+          "command": "positCheatsheets.clearCache",
+          "when": "view == positCheatsheets.list",
+          "group": "cache"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "positCheatsheets.pin",
+          "when": "view =~ /^positCheatsheets\\./ && viewItem =~ / unpinned/",
+          "group": "inline@1"
+        },
+        {
+          "command": "positCheatsheets.unpin",
+          "when": "view =~ /^positCheatsheets\\./ && viewItem =~ / pinned/",
+          "group": "inline@1"
+        },
+        {
+          "command": "positCheatsheets.openInBrowser",
+          "when": "view =~ /^positCheatsheets\\./ && viewItem =~ /^cheatsheet/",
+          "group": "inline@2"
+        },
+        {
+          "command": "positCheatsheets.open",
+          "when": "view =~ /^positCheatsheets\\./ && viewItem =~ /^cheatsheet/",
+          "group": "1_open@1"
+        },
+        {
+          "command": "positCheatsheets.openInBrowser",
+          "when": "view =~ /^positCheatsheets\\./ && viewItem =~ /^cheatsheet/",
+          "group": "1_open@2"
+        },
+        {
+          "command": "positCheatsheets.pin",
+          "when": "view =~ /^positCheatsheets\\./ && viewItem =~ / unpinned/",
+          "group": "2_favorites"
+        },
+        {
+          "command": "positCheatsheets.unpin",
+          "when": "view =~ /^positCheatsheets\\./ && viewItem =~ / pinned/",
+          "group": "2_favorites"
+        },
+        {
+          "command": "positCheatsheets.redownload",
+          "when": "view =~ /^positCheatsheets\\./ && viewItem =~ / cached/",
+          "group": "3_cache"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "positCheatsheets.open",
+          "when": "false"
+        },
+        {
+          "command": "positCheatsheets.openInBrowser",
+          "when": "false"
+        },
+        {
+          "command": "positCheatsheets.redownload",
+          "when": "false"
+        },
+        {
+          "command": "positCheatsheets.pin",
+          "when": "false"
+        },
+        {
+          "command": "positCheatsheets.unpin",
+          "when": "false"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "build": "node esbuild.mjs",
+    "watch": "node esbuild.mjs --watch",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:positron": "npm run build && node scripts/test-positron.mjs",
+    "package": "vsce package --no-dependencies",
+    "vscode:prepublish": "npm run typecheck && node esbuild.mjs --production"
+  },
+  "dependencies": {
+    "node-html-parser": "^9.0.4"
+  },
+  "devDependencies": {
+    "@types/node": "^22.20.5",
+    "@types/vscode": "~1.90.0",
+    "@vscode/vsce": "^4.0.0",
+    "esbuild": "^0.28.2",
+    "ovsx": "^1.2.0",
+    "typescript": "^5.9.3",
+    "vitest": "^5.0.3"
+  }
+}
